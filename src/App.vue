@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <Session :ircMessages="ircBot.messages"></Session>
+    <Session :ircMessages="Bots.ircBot.messages"></Session>
   </div>
 </template>
 
 <script>
-import Bots from "./scripts/TGBOT";
+import TGBOT from "./scripts/TGBOT";
 
 import Session from "./components/scenes/Session";
 
@@ -16,8 +16,11 @@ export default {
   },
   data() {
     return {
-      ircBot: Bots.ircBot,
+      Bots: TGBOT(),
     };
+  },
+  beforeDestroy() {
+    this.Bots.destroy();
   },
 };
 </script>

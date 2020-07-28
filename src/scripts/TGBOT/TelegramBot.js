@@ -5,9 +5,10 @@ class TelegramBot {
 
     this.ignoreConfirmed = true;
     this.lastUpdateId = -1;
+    this.alive = true;
+    this.ready = function() {};
 
     this.setup();
-    this.ready = function() {};
   }
 
   async setup() {
@@ -55,25 +56,21 @@ class TelegramBot {
   }
 
   /**
-   *
+   * TGBot received message
    * @param {Object} message
    * @param {TelegramBotResponse} response
    */
-  async receiveMessage(message, response) {
-    // console.log("get msg", message, response);
-    response.setText(message.text);
-    // response.addInlineBtn("hi", "call_hi");
-    await response.send();
+  async receiveMessage(msg, res) {
+    console.log("unhandled message", msg, res);
   }
 
   /**
-   *
+   * TGBot received callback
    * @param {Object} message
    * @param {TelegramBotResponse} response
    */
-  async receiveCallback(callback, response) {
-    // console.log("get callback", callback, response);
-    await response.send();
+  async receiveCallback(cal, res) {
+    console.log("unhandled callback", cal, res);
   }
 
   /**
@@ -82,8 +79,11 @@ class TelegramBot {
    */
   request(api, payload = {}) {
     let xhr = new XMLHttpRequest();
+    let me = this;
     // console.log(payload);
     return new Promise((done) => {
+      if (!me.alive) return done();
+
       xhr.open("post", `https://api.telegram.org/bot${this.token}/${api}`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onload = function() {
@@ -95,6 +95,10 @@ class TelegramBot {
       xhr.send(JSON.stringify(payload));
     });
   }
+
+  destroy() {
+    this.alive = false;
+  }
 }
 
 class TelegramBotResponse {
@@ -103,7 +107,7 @@ class TelegramBotResponse {
     this.bot = bot;
     this.chat_id = chat_id;
 
-    this.text = "";
+    this.text = null;
     this.reply_markup = {};
 
     this.inline_keyboard = null;
@@ -128,15 +132,19 @@ class TelegramBotResponse {
       });
     }
 
-    return this.bot.request("sendMessage", {
+    let payload = {
       chat_id: this.chat_id,
-      text: this.text,
+      // text: this.text,
       // parse_mode:
       // disable_web_page_preview:
       // disable_notification:
       // reply_to_message_id:
       reply_markup,
-    });
+    };
+
+    if (this.text) payload.text = this.text;
+
+    return this.bot.request("sendMessage", payload);
   }
 
   setText(text) {

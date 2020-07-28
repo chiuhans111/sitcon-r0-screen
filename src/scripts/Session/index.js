@@ -8,7 +8,7 @@ let data = {
 };
 
 function loadSession(session) {
-  console.log(session);
+  // console.log(session);
   data.session = session;
   data.parsed = utils.parseSession(session);
 }

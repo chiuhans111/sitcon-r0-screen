@@ -5,12 +5,12 @@
   </div>
 </template>
 <script>
-import Bots from '../../scripts/TGBOT'
+import TGBOT from '../../scripts/TGBOT'
 
 export default {
   data() {
     return {
-      ircBot: Bots.ircBot
+      ircBot: TGBOT()
     };
   },
 };
