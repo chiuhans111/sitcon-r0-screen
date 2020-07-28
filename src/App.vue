@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Session :ircMessages="ircBot.messages"></Session>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Bots from "./scripts/TGBOT";
+
+import Session from "./components/scenes/Session";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Session,
+  },
+  data() {
+    return {
+      ircBot: Bots.ircBot,
+    };
+  },
+};
 </script>
 
 <style>
