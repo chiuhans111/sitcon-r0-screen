@@ -9,12 +9,26 @@ function updateBot(bot, interval) {
     // console.log(ircBot.messages);
     if (bot.alive) {
       bot.update();
-      bot.getUpdate().then(function() {
-        setTimeout(update, interval);
+      bot.getUpdate(interval).then(function() {
+        setTimeout(update, 0);
       });
     }
   };
-  return update;
+
+  let updateLoop = function() {
+    // console.log(ircBot.messages);
+    if (bot.alive) {
+      bot.update();
+      setTimeout(updateLoop, 1000);
+    }
+  };
+
+  function start() {
+    update();
+    updateLoop();
+  }
+
+  return start;
 }
 
 function TGBOT() {
@@ -23,8 +37,8 @@ function TGBOT() {
     ircBot = new IRCBot(config.bots.IRC.token);
     controlBot = new ControlBot(config.bots.Control.token);
 
-    ircBot.ready = updateBot(ircBot, 1000);
-    controlBot.ready = updateBot(controlBot, 0);
+    ircBot.ready = updateBot(ircBot);
+    controlBot.ready = updateBot(controlBot);
 
     destroy = function() {
       console.log("bot prepare to be destroyed!");

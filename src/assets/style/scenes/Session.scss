@@ -1,0 +1,36 @@
+.session {
+    &-top,
+    &-bottom {
+        height: 90px;
+    }
+
+    &-top {
+        background-color: black;
+    }
+
+    &-bottom {
+        background-color: black;
+    }
+
+    &-middle {
+        height: 900px;
+        display: flex;
+    }
+
+    &-left {
+        width: 1600px;
+        height: 900px;
+        background-color: rgb(255, 178, 133);
+    }
+
+    &-right {
+        width: 320px;
+        background-color: rgb(87, 182, 87);
+        height: 900px;
+
+        &_top {
+            height: 270px;
+            background-color: rgb(56, 56, 228);
+        }
+    }
+}

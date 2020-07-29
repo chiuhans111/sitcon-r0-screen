@@ -1,34 +1,29 @@
 <template>
   <div id="app">
+    <Session></Session>
+
     <h3>layout</h3>
-    <p>
-      {{ Bots.controlBot.globalstate.layout }}
-    </p>
+    <p>{{ Bots.controlBot.globalstate.layout }}</p>
     <h3>mode</h3>
-    <p>
-      {{ Bots.controlBot.globalstate.mode }}
-    </p>
+    <p>{{ Bots.controlBot.globalstate.mode }}</p>
     <h3>auto session</h3>
-    <p>
-      {{ Bots.controlBot.globalstate.auto }}
-    </p>
+    <p>{{ Bots.controlBot.globalstate.auto }}</p>
     <h3>speaker</h3>
-    <p>
-      {{ Bots.controlBot.globalstate.speaker }}
-    </p>
+    <p>{{ Bots.controlBot.globalstate.speaker }}</p>
     <h3>session</h3>
-    <p>
-      {{ Bots.controlBot.globalstate.session }}
-    </p>
+    <p v-if="Bots.controlBot.globalstate.session">{{ Bots.controlBot.globalstate.session.title }}</p>
   </div>
 </template>
 
 <script>
 import TGBOT from "./scripts/TGBOT";
+import Session from "./components/scenes/Session";
 
 export default {
   name: "App",
-  components: {},
+  components: {
+    Session,
+  },
   data() {
     return {
       Bots: TGBOT(),
@@ -42,11 +37,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
 }
 </style>

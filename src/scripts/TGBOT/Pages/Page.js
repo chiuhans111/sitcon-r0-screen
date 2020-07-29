@@ -75,12 +75,18 @@ class Page {
     return guardian.check(this.user, this.permissions);
   }
 
+  cleanText(text) {
+    if (text[0] == ">") text = text.substr(1);
+    if (text[0] == "[") text = text.substr(1, text.length - 2);
+    return text;
+  }
+
   handle(data, res) {
     console.log(data, res);
     this.data = data;
     this.res = res;
 
-    if (data.message) {
+    if (data.message && data.text) {
       if (data.text == "/start") return this.bot.defaultPage;
       for (let command of this.commands) {
         if (data.text == command.command) {
@@ -89,14 +95,15 @@ class Page {
           }
         }
       }
+      let inText = this.cleanText(data.text);
       for (let btn of this.btns) {
-        if (data.text == btn.text) {
+        if (inText == this.cleanText(btn.text)) {
           if (guardian.check(this.user, btn.permissions)) {
             return btn.callback();
           }
         }
       }
-    } else if (data.callback) {
+    } else if (data.callback && data.text) {
       for (let btn of this.inlineBtns) {
         if (data.text == btn.cbid) {
           if (guardian.check(this.user, btn.permissions)) {
@@ -104,6 +111,10 @@ class Page {
           }
         }
       }
+    } else {
+      this.res.setText("我看不懂@@");
+      this.res.send();
+      return null;
     }
 
     this.res.send();

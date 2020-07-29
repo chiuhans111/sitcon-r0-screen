@@ -1,0 +1,29 @@
+.topbar {
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+    &-title {
+        position: relative;
+        color: black;
+        background-color: white;
+        font-size: 24px;
+        display: inline-block;
+        padding: 8px 8px 8px 30px;
+        font-weight: 600;
+
+        &::after {
+            display: block;
+            position: absolute;
+            right: -10px;
+            top: 0px;
+
+            content: "";
+
+            height: 100%;
+            width: 20px;
+            background-color: white;
+            transform: skew(-10.1deg);
+        }
+    }
+}

@@ -20,7 +20,7 @@ class TelegramBot {
   update() {}
 
   async getUpdate() {
-    let payload = {};
+    let payload = { timeout: 5 };
 
     if (this.ignoreConfirmed) {
       payload.offset = this.lastUpdateId + 1;
