@@ -26,11 +26,9 @@
 <script>
 import TGBOT from "./scripts/TGBOT";
 
-
 export default {
   name: "App",
-  components: {
-  },
+  components: {},
   data() {
     return {
       Bots: TGBOT(),

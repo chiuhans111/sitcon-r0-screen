@@ -10,7 +10,17 @@ class Page {
     this.data = data;
     this.res = res;
 
-    this.reload();
+    this.reset();
+    this.initialize();
+    this.res.textln(this.name);
+  }
+
+  reset() {
+    this.btns = [];
+    this.inlineBtns = [];
+    this.commands = [];
+    this.res.reset();
+    this.inlineCounter = 0;
   }
 
   addBtn(text, permissions, callback) {
@@ -26,9 +36,8 @@ class Page {
     }
   }
 
-  inlineCounter = 0;
   addInlineBtn(text, permissions, callback) {
-    let cbid = Math.random() + "_" + (this.inlineCounter++ % 100);
+    let cbid = "_" + (this.inlineCounter++ % 100);
     if (guardian.check(this.user, permissions)) {
       this.inlineBtns.push({ cbid, permissions, callback });
       this.res.addInlineBtn(text, cbid);
@@ -36,17 +45,11 @@ class Page {
   }
 
   reload() {
-    this.btns = [];
-    this.inlineBtns = [];
-    this.commands = [];
-
-    this.res.reset();
+    this.reset();
     this.initialize();
-    this.res.textln(this.name);
-    // this.res.send();
-    // this.res.reset();
-
-    this.pandingReload = false;
+    this.res.textln(this.name + " 更新");
+    if (this.inlineBtns.length == 0) this.res.send();
+    else this.res.editInlineKeyboard();
   }
 
   requestReload() {

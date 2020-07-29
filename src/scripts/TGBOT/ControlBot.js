@@ -2,7 +2,7 @@ import TelegramBot from "./TelegramBot";
 import Start from "./Pages/Start";
 
 import Layouts from "../Scene/Layouts";
-// import SessionData from "../Session";
+import SessionData from "../Session";
 
 class ControlBot extends TelegramBot {
   constructor(token) {
@@ -24,10 +24,10 @@ class ControlBot extends TelegramBot {
     this.globalstate.layout = layout;
     if (!this.globalstate.layout.modes.includes(this.globalstate.mode))
       this.setMode(this.globalstate.layout.modes[0]);
-    // for (let i in this.userstates) {
+    for (let i in this.userstates) {
       // this.userstates[i].requestReload();
-      // this.userstates[i].initialize();
-    // }
+      this.userstates[i].reload();
+    }
   }
 
   setMode(mode) {
@@ -51,11 +51,11 @@ class ControlBot extends TelegramBot {
   }
 
   update() {
-    // this.setSession(
-    //   SessionData.session.sessions[
-    //     Math.floor(Math.random() * SessionData.session.sessions.length)
-    //   ]
-    // );
+    this.setSession(
+      SessionData.session.sessions[
+        Math.floor(Math.random() * SessionData.session.sessions.length)
+      ]
+    );
   }
 
   receiveMessage(msg, res) {

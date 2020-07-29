@@ -109,6 +109,8 @@ class TelegramBotResponse {
     this.bot = bot;
     this.chat_id = chat_id;
 
+    this.last_inline_keyboard_result = null;
+
     this.reset();
   }
 
@@ -126,23 +128,9 @@ class TelegramBotResponse {
   }
 
   send() {
+    let me = this;
+
     if (this.text == null && this.inline_keyboard == null) return;
-    // let reply_markup = {};
-
-    // if (this.inline_keyboard != null)
-    //   reply_markup.inline_keyboard = this.inline_keyboard;
-
-    // if (this.keyboard != null) reply_markup.keyboard = this.keyboard;
-
-    // let payload = {
-    //   chat_id: this.chat_id,
-    //   // text: this.text,
-    //   // parse_mode:
-    //   // disable_web_page_preview:
-    //   // disable_notification:
-    //   // reply_to_message_id:
-    //   reply_markup,
-    // };
 
     let payload = { chat_id: this.chat_id, text: this.text || "SITCON 2020" };
 
@@ -156,15 +144,15 @@ class TelegramBotResponse {
     this.bot.request("sendMessage", payload);
 
     if (this.inline_keyboard !== null) {
-      let reply_markup = {
-        inline_keyboard: this.inline_keyboard.filter((x) => x.length > 0),
-      };
-      this.bot.request("sendMessage", {
-        chat_id: this.chat_id,
-        text: "↓",
-        reply_markup,
-      });
-      console.log("rm", reply_markup);
+      this.bot
+        .request("sendMessage", {
+          chat_id: this.chat_id,
+          text: "↓",
+          reply_markup: this.getInlineKeyboardReplyMarkup(),
+        })
+        .then(function(result) {
+          me.last_inline_keyboard_result = result;
+        });
     }
 
     if (this.answer_callback_id) {
@@ -172,6 +160,24 @@ class TelegramBotResponse {
         callback_query_id: this.answer_callback_id,
       });
     }
+  }
+
+  editInlineKeyboard() {
+    if (this.last_inline_keyboard_result == null) return;
+    let chat_id = this.last_inline_keyboard_result.result.chat.id;
+    let message_id = this.last_inline_keyboard_result.result.message_id;
+    let reply_markup = this.getInlineKeyboardReplyMarkup();
+    this.bot.request("editMessageReplyMarkup", {
+      chat_id,
+      message_id,
+      reply_markup,
+    });
+  }
+
+  getInlineKeyboardReplyMarkup() {
+    return {
+      inline_keyboard: this.inline_keyboard.filter((x) => x.length > 0),
+    };
   }
 
   setText(text) {
