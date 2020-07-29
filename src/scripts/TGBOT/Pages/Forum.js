@@ -17,26 +17,28 @@ class Forum extends Page {
 
     if (me.bot.globalstate.layout == Layouts.Forum) {
       me.bot.globalstate.layout.modes.map((mode) => {
-        this.addBtn(mode, [permissions.forumModeControl], function() {
+        let btnText = mode;
+        if (this.bot.globalstate.mode == mode) btnText = "[" + btnText + "]";
+
+        this.addBtn(btnText, [permissions.forumModeControl], function() {
           if (me.bot.globalstate.layout == Layouts.Forum) {
-            me.bot.setMode(mode)
+            me.bot.setMode(mode);
           }
         });
       });
       this.res.addBtnRow();
 
       for (let i in Speakers) {
-        this.addBtn(
-          Speakers[i].name,
-          [permissions.forumCardControl],
-          function() {
-            me.bot.setSpeaker(Speakers[i]);
-          }
-        );
+        let btnText = Speakers[i].name;
+        if (this.bot.globalstate.speaker == Speakers[i])
+          btnText = "[" + btnText + "]";
+        this.addBtn(btnText, [permissions.forumCardControl], function() {
+          me.bot.setSpeaker(Speakers[i]);
+        });
       }
 
       this.res.addBtnRow();
-      this.addBtn("無字卡", [permissions.forumCardControl], function() {
+      this.addBtn("清空字卡", [permissions.forumCardControl], function() {
         me.bot.setSpeaker(null);
       });
     } else {

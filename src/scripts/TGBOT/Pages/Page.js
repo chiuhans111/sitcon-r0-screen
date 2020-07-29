@@ -13,6 +13,7 @@ class Page {
     this.reset();
     this.initialize();
     this.res.textln(this.name);
+    this.res.send();
   }
 
   reset() {
@@ -44,12 +45,13 @@ class Page {
     }
   }
 
-  reload() {
+  reload(msg) {
     this.reset();
     this.initialize();
-    this.res.textln(this.name + " 更新");
+    this.res.setText(msg);
     if (this.inlineBtns.length == 0) this.res.send();
     else this.res.editInlineKeyboard();
+    this.res.reset();
   }
 
   requestReload() {
@@ -103,6 +105,8 @@ class Page {
         }
       }
     }
+
+    this.res.send();
 
     return false;
   }

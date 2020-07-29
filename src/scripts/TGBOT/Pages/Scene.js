@@ -13,8 +13,13 @@ class Scene extends Page {
     this.permissions = [permissions.layoutControl];
 
     for (let mode of this.bot.globalstate.layout.modes) {
-      this.addBtn(mode, this.permissions, function() {
-        me.bot.setMode(mode)
+      let btnText = mode;
+      if (this.bot.globalstate.mode == mode) btnText = "[" + btnText + "]";
+
+      this.addBtn(btnText, this.permissions, function() {
+        me.bot.setMode(mode);
+        me.res.textln("設定版面成功");
+        me.res.send();
       });
     }
     this.res.addBtnRow();

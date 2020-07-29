@@ -11,6 +11,7 @@ import Forum from "./Forum";
 class SessionSelector extends Page {
   initialize() {
     this.name = "議程選擇";
+    this.permissions = [permissions.sessionControl];
 
     this.addBtn("導播", [permissions.layoutControl], () => Scene);
     this.addBtn("議程", [permissions.sessionControl], () => Session);
@@ -35,6 +36,7 @@ class SessionSelector extends Page {
                 FormatTime.hhmm(session.end)
             );
             me.res.textln(session.zh.title);
+            me.res.send();
             me.bot.setSession(session);
           }
         );
@@ -52,17 +54,17 @@ class Session extends Page {
     this.name = "議程管理";
     this.permissions = [permissions.sessionControl];
 
-    
     this.addBtn("手動", this.permissions, function() {
+      me.bot.setAuto(false);
       me.res.textln("已設定議程為手動。");
-      // me.res.send()
-      me.bot.setAuto(false)
+      me.res.send();
       return SessionSelector;
     });
-    
+
     this.addBtn("自動", this.permissions, function() {
-      me.res.textln("已設定議程為自動。");
-      me.bot.setAuto(true)
+      me.bot.setAuto(true);
+      // me.res.textln("已設定議程為自動。");
+      // me.res.send();
     });
 
     this.res.addBtnRow();

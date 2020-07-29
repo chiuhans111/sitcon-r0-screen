@@ -17,9 +17,9 @@ const permissions = {
   roleManagement: {
     title: "權限控制",
   },
-  visit: {
-    title: "參觀",
-  },
+  participate: {
+    title: "參與",
+  }
 };
 
 export default permissions;

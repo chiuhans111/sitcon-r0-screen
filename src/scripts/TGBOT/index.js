@@ -4,14 +4,11 @@ import config from "../../../config.js";
 
 let ircBot, controlBot, destroy;
 
-let t = 0;
 function updateBot(bot, interval) {
   let update = function() {
-    t++;
     // console.log(ircBot.messages);
     if (bot.alive) {
-      if (t % 10 == 0) bot.update();
-
+      bot.update();
       bot.getUpdate().then(function() {
         setTimeout(update, interval);
       });

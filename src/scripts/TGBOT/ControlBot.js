@@ -1,8 +1,12 @@
 import TelegramBot from "./TelegramBot";
 import Start from "./Pages/Start";
+import VisotorPage from "./Pages/VisitorPage";
 
 import Layouts from "../Scene/Layouts";
-import SessionData from "../Session";
+// import SessionData from "../Session";
+
+import guardian from "./authenticate/guardian";
+import permissions from "./authenticate/permissions";
 
 class ControlBot extends TelegramBot {
   constructor(token) {
@@ -18,47 +22,62 @@ class ControlBot extends TelegramBot {
     };
 
     this.defaultPage = Start;
+    this.defaultVisotorPage = VisotorPage;
+  }
+
+  broadcastUpdate(msg, permissions) {
+    for (let i in this.userstates) {
+      if (guardian.check(this.userstates[i].user, permissions)) {
+        this.userstates[i].reload(msg);
+      }
+    }
   }
 
   setLayout(layout) {
     this.globalstate.layout = layout;
     if (!this.globalstate.layout.modes.includes(this.globalstate.mode))
       this.setMode(this.globalstate.layout.modes[0]);
-    for (let i in this.userstates) {
-      // this.userstates[i].requestReload();
-      this.userstates[i].reload();
-    }
+
+    this.broadcastUpdate("更新版面為：" + layout.title, [
+      permissions.participate,
+    ]);
   }
 
   setMode(mode) {
     if (this.globalstate.layout.modes.includes(mode)) {
       this.globalstate.mode = mode;
+
+      this.broadcastUpdate("更新模式為：" + mode, [permissions.participate]);
     }
   }
 
   setAuto(auto) {
     this.globalstate.auto = auto;
+    this.broadcastUpdate("更新議程自動規則：" + auto, [
+      permissions.participate,
+    ]);
   }
 
   setSession(session) {
     this.globalstate.session = session;
     this.setLayout(Layouts.fromSession(session));
     if (session.type == "F") this.setSpeaker(null);
+    this.broadcastUpdate("更新議程為：" + session.zh.title, [
+      permissions.participate,
+    ]);
   }
 
   setSpeaker(speaker) {
+    let name = "無";
+    if (speaker) name = speaker.name;
     this.globalstate.speaker = speaker;
+    this.broadcastUpdate("更新講者為：" + name, [permissions.participate]);
   }
 
-  update() {
-    this.setSession(
-      SessionData.session.sessions[
-        Math.floor(Math.random() * SessionData.session.sessions.length)
-      ]
-    );
-  }
+  update() {}
 
   receiveMessage(msg, res) {
+    console.log(msg, res);
     this.receiveInput(
       msg.chat.username,
       {
@@ -81,8 +100,22 @@ class ControlBot extends TelegramBot {
   }
 
   receiveInput(user, data, res) {
+    if (user == undefined) {
+      res.textln("歡迎來到 SITCON 控台");
+      res.textln("你必須有 telegram username 才能使用此服務。");
+      res.send();
+      return;
+    }
     if (this.userstates[user] == null) {
       this.userstates[user] = new this.defaultPage(this, user, data, res);
+      if (!guardian.check(user, [permissions.participate])) {
+        this.userstates[user] = new this.defaultVisotorPage(
+          this,
+          user,
+          data,
+          res
+        );
+      }
     }
 
     let nextPage = this.userstates[user].handle(data, res);
@@ -98,7 +131,7 @@ class ControlBot extends TelegramBot {
       }
     }
 
-    res.send();
+    // res.send();
   }
 }
 

@@ -1,7 +1,7 @@
 import config from "../../../../config";
 import roles from "./roles";
 
-let defaultRole = roles.people;
+let defaultRole = roles.visitor;
 
 let roleConfig = {};
 
@@ -14,6 +14,7 @@ function see(user) {
 }
 
 function check(user, permissions) {
+  if (permissions.length == 0) return true;
   let role = see(user);
   return permissions.every((p) => role.includes(p));
 }

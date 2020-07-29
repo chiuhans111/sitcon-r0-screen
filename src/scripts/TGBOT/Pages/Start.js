@@ -11,12 +11,12 @@ class Start extends Page {
 
   permissions = [];
 
-  checkPermission() {
-    return guardian.check(this.user, this.permissions);
-  }
+  // checkPermission() {
+  //   return guardian.check(this.user, this.permissions);
+  // }
 
   initialize() {
-    this.res.textln("welcome " + this.user + " !");
+    this.res.textln("welcome @" + this.user + " !");
     this.res.textln("你能使用的權限：");
     this.res.textln(
       guardian
@@ -32,4 +32,3 @@ class Start extends Page {
 }
 
 export default Start;
-0;
