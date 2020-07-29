@@ -17,6 +17,8 @@ class TelegramBot {
     // this.getUpdate();
   }
 
+  update() {}
+
   async getUpdate() {
     let payload = {};
 
@@ -111,7 +113,7 @@ class TelegramBotResponse {
   }
 
   reset() {
-    this.text = "";
+    this.text = null;
     this.reply_markup = {};
 
     this.inline_keyboard = null;
@@ -124,6 +126,7 @@ class TelegramBotResponse {
   }
 
   send() {
+    if (this.text == null && this.inline_keyboard == null) return;
     // let reply_markup = {};
 
     // if (this.inline_keyboard != null)
@@ -176,6 +179,7 @@ class TelegramBotResponse {
   }
 
   textln(text) {
+    if (this.text == null) this.inline_keyboardtext = "";
     this.text += text + "\n";
   }
 

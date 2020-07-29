@@ -10,19 +10,19 @@ class Page {
     this.data = data;
     this.res = res;
 
-    this.btns = [];
-    this.inlineBtns = [];
-
-    this.res.reset();
-    this.initialize();
-
-    this.res.textln(this.name + "\n");
+    this.reload();
   }
 
   addBtn(text, permissions, callback) {
     if (guardian.check(this.user, permissions)) {
       this.btns.push({ text, permissions, callback });
       this.res.addBtn(text);
+    }
+  }
+
+  addCommand(command, permissions, callback) {
+    if (guardian.check(this.user, permissions)) {
+      this.commands.push({ command, permissions, callback });
     }
   }
 
@@ -33,6 +33,33 @@ class Page {
       this.inlineBtns.push({ cbid, permissions, callback });
       this.res.addInlineBtn(text, cbid);
     }
+  }
+
+  reload() {
+    this.btns = [];
+    this.inlineBtns = [];
+    this.commands = [];
+
+    this.res.reset();
+    this.res.textln(this.name + "\n");
+    this.initialize();
+    this.res.send();
+    this.res.reset();
+
+    this.pandingReload = false;
+  }
+
+  requestReload() {
+    if (!this.pandingReload) {
+      let me = this;
+      this.res.reset();
+      this.res.textln("狀態更新 /update");
+      this.addCommand("/update", this.permissions, function() {
+        me.reload();
+      });
+      this.res.send();
+    }
+    this.pandingReload = true;
   }
 
   initialize() {
@@ -50,6 +77,13 @@ class Page {
 
     if (data.message) {
       if (data.text == "/start") return this.bot.defaultPage;
+      for (let command of this.commands) {
+        if (data.text == command.command) {
+          if (guardian.check(this.user, command.permissions)) {
+            return command.callback();
+          }
+        }
+      }
       for (let btn of this.btns) {
         if (data.text == btn.text) {
           if (guardian.check(this.user, btn.permissions)) {

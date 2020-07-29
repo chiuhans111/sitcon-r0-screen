@@ -7,10 +7,12 @@ let ircBot, controlBot, destroy;
 function updateBot(bot, interval) {
   let update = function() {
     // console.log(ircBot.messages);
-    if (bot.alive)
+    if (bot.alive) {
+      bot.update();
       bot.getUpdate().then(function() {
         setTimeout(update, interval);
       });
+    }
   };
   return update;
 }
