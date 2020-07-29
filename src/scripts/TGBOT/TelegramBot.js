@@ -113,7 +113,7 @@ class TelegramBotResponse {
   }
 
   reset() {
-    this.text = null;
+    this.text = "";
     this.reply_markup = {};
 
     this.inline_keyboard = null;

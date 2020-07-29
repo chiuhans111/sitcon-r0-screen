@@ -41,10 +41,10 @@ class Page {
     this.commands = [];
 
     this.res.reset();
-    this.res.textln(this.name + "\n");
     this.initialize();
-    this.res.send();
-    this.res.reset();
+    this.res.textln(this.name);
+    // this.res.send();
+    // this.res.reset();
 
     this.pandingReload = false;
   }

@@ -1,19 +1,35 @@
 <template>
   <div id="app">
-    <Session :ircMessages="Bots.ircBot.messages"></Session>
-    {{Bots.controlBot.globalstate}}
+    <h3>layout</h3>
+    <p>
+      {{ Bots.controlBot.globalstate.layout }}
+    </p>
+    <h3>mode</h3>
+    <p>
+      {{ Bots.controlBot.globalstate.mode }}
+    </p>
+    <h3>auto session</h3>
+    <p>
+      {{ Bots.controlBot.globalstate.auto }}
+    </p>
+    <h3>speaker</h3>
+    <p>
+      {{ Bots.controlBot.globalstate.speaker }}
+    </p>
+    <h3>session</h3>
+    <p>
+      {{ Bots.controlBot.globalstate.session }}
+    </p>
   </div>
 </template>
 
 <script>
 import TGBOT from "./scripts/TGBOT";
 
-import Session from "./components/scenes/Session";
 
 export default {
   name: "App",
   components: {
-    Session,
   },
   data() {
     return {

@@ -53,8 +53,6 @@ class Session extends Page {
     this.permissions = [permissions.sessionControl];
 
     
-
-    
     this.addBtn("手動", this.permissions, function() {
       me.res.textln("已設定議程為手動。");
       // me.res.send()
