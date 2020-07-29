@@ -120,31 +120,51 @@ class TelegramBotResponse {
   }
 
   send() {
-    let reply_markup = {};
+    // let reply_markup = {};
 
-    if (this.inline_keyboard != null)
-      reply_markup.inline_keyboard = this.inline_keyboard;
-    if (this.keyboard != null) reply_markup.keyboard = this.keyboard;
+    // if (this.inline_keyboard != null)
+    //   reply_markup.inline_keyboard = this.inline_keyboard;
+
+    // if (this.keyboard != null) reply_markup.keyboard = this.keyboard;
+
+    // let payload = {
+    //   chat_id: this.chat_id,
+    //   // text: this.text,
+    //   // parse_mode:
+    //   // disable_web_page_preview:
+    //   // disable_notification:
+    //   // reply_to_message_id:
+    //   reply_markup,
+    // };
+
+    let payload = { chat_id: this.chat_id, text: this.text || "SITCON 2020" };
+
+    if (this.keyboard !== null) {
+      payload.reply_markup = {
+        keyboard: this.keyboard.filter((x) => x.length > 0),
+      };
+    }
+
+    this.bot.request("sendMessage", payload);
+
+    // TODO: fix inline keyboard cannot new line and dont show up
+    if (this.inline_keyboard !== null) {
+      let reply_markup = {
+        inline_keyboard: this.inline_keyboard.filter((x) => x.length > 0),
+      };
+      this.bot.request("sendMessage", {
+        chat_id: this.chat_id,
+        text: "↓",
+        reply_markup,
+      });
+      console.log("rm", reply_markup);
+    }
 
     if (this.answer_callback_id) {
       this.bot.request("answerCallbackQuery", {
         callback_query_id: this.answer_callback_id,
       });
     }
-
-    let payload = {
-      chat_id: this.chat_id,
-      // text: this.text,
-      // parse_mode:
-      // disable_web_page_preview:
-      // disable_notification:
-      // reply_to_message_id:
-      reply_markup,
-    };
-
-    if (this.text) payload.text = this.text;
-
-    return this.bot.request("sendMessage", payload);
   }
 
   setText(text) {

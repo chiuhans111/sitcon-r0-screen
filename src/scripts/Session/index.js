@@ -18,7 +18,7 @@ loadSession(session);
 var xhr = new XMLHttpRequest();
 xhr.open("get", "https://sitcon.org/2020/json/session.json");
 xhr.onload = function() {
-  loadSession(xhr.response);
+  loadSession(JSON.parse(xhr.response));
 };
 xhr.send();
 

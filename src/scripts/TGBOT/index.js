@@ -21,9 +21,8 @@ function TGBOT() {
     ircBot = new IRCBot(config.bots.IRC.token);
     controlBot = new ControlBot(config.bots.Control.token);
 
-    ircBot.ready = updateBot(ircBot);
-
-    controlBot.ready = updateBot(controlBot);
+    ircBot.ready = updateBot(ircBot, 1000);
+    controlBot.ready = updateBot(controlBot, 0);
 
     destroy = function() {
       console.log("bot prepare to be destroyed!");

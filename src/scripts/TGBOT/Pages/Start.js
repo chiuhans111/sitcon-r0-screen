@@ -3,6 +3,8 @@ import permissions from "../authenticate/permissions";
 import Page from "./Page";
 
 import Scene from "./Scene";
+import Session from "./Session";
+import Seminar from "./Seminar";
 
 class Start extends Page {
   name = "SITCON 2020 控制台";
@@ -23,10 +25,11 @@ class Start extends Page {
         .join("、")
     );
 
-    this.addBtn("Scene", [permissions.layoutControl], function() {
-      return Scene;
-    });
+    this.addBtn("導播", [permissions.layoutControl], () => Scene);
+    this.addBtn("議程", [permissions.sessionControl], () => Session);
+    this.addBtn("論壇", [permissions.seminarCardControl], () => Seminar);
   }
 }
 
 export default Start;
+0;

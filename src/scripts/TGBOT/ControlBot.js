@@ -11,6 +11,8 @@ class ControlBot extends TelegramBot {
     this.globalstate = {
       layout: Layout.STBY,
       mode: Layout.STBY.modes[0],
+      auto: true,
+      session: null,
     };
 
     this.defaultPage = Start;
