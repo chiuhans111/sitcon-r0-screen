@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Session :ircMessages="Bots.ircBot.messages"></Session>
+    {{Bots.controlBot.globalstate}}
   </div>
 </template>
 

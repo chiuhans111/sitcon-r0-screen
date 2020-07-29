@@ -1,6 +1,12 @@
 const permissions = {
-  seminarCardControl: {
+  ForumControl: {
+    title: "論壇控制",
+  },
+  forumCardControl: {
     title: "論壇字卡控制",
+  },
+  forumModeControl: {
+    title: "論壇模式控制",
   },
   layoutControl: {
     title: "版面控制",

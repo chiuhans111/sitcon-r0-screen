@@ -12,9 +12,11 @@ class Page {
 
     this.btns = [];
     this.inlineBtns = [];
+
+    this.res.reset();
     this.initialize();
 
-    this.res.setText(this.name + "\n");
+    this.res.textln(this.name + "\n");
   }
 
   addBtn(text, permissions, callback) {
@@ -43,6 +45,8 @@ class Page {
 
   handle(data, res) {
     console.log(data, res);
+    this.data = data;
+    this.res = res;
 
     if (data.message) {
       if (data.text == "/start") return this.bot.defaultPage;

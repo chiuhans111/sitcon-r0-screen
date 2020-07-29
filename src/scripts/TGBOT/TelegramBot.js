@@ -107,7 +107,11 @@ class TelegramBotResponse {
     this.bot = bot;
     this.chat_id = chat_id;
 
-    this.text = null;
+    this.reset();
+  }
+
+  reset() {
+    this.text = "";
     this.reply_markup = {};
 
     this.inline_keyboard = null;
@@ -142,12 +146,12 @@ class TelegramBotResponse {
     if (this.keyboard !== null) {
       payload.reply_markup = {
         keyboard: this.keyboard.filter((x) => x.length > 0),
+        resize_keyboard: this.keyboard.length < 3,
       };
     }
 
     this.bot.request("sendMessage", payload);
 
-    // TODO: fix inline keyboard cannot new line and dont show up
     if (this.inline_keyboard !== null) {
       let reply_markup = {
         inline_keyboard: this.inline_keyboard.filter((x) => x.length > 0),

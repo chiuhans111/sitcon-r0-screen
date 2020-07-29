@@ -5,24 +5,23 @@ import Page from "./Page";
 
 import Start from "./Start";
 import Session from "./Session";
-import Seminar from "./Seminar";
+import Forum from "./Forum";
 class Scene extends Page {
   initialize() {
     let me = this;
     this.name = "場景選擇";
     this.permissions = [permissions.layoutControl];
 
-    this.addBtn("←BACK", [], () => Start);
-    this.addBtn("議程", [permissions.sessionControl], () => Session);
-    this.addBtn("論壇", [permissions.seminarCardControl], () => Seminar);
-
-    this.res.addBtnRow();
-
     for (let mode of this.bot.globalstate.layout.modes) {
       this.addBtn(mode, this.permissions, function() {
-        me.bot.globalstate.mode = mode;
+        me.bot.setMode(mode)
       });
     }
+    this.res.addBtnRow();
+
+    this.addBtn("↓", [], () => Start);
+    this.addBtn("議程", [permissions.sessionControl], () => Session);
+    this.addBtn("論壇", [permissions.forumCardControl], () => Forum);
   }
 }
 

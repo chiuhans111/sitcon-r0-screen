@@ -1,7 +1,7 @@
 import TelegramBot from "./TelegramBot";
 import Start from "./Pages/Start";
 
-import Layout from "../Scene/Layouts";
+import Layouts from "../Scene/Layouts";
 
 class ControlBot extends TelegramBot {
   constructor(token) {
@@ -9,13 +9,40 @@ class ControlBot extends TelegramBot {
 
     this.userstates = {};
     this.globalstate = {
-      layout: Layout.STBY,
-      mode: Layout.STBY.modes[0],
+      layout: Layouts.STBY,
+      mode: Layouts.STBY.modes[0],
       auto: true,
       session: null,
+      speaker: null,
     };
 
     this.defaultPage = Start;
+  }
+
+  setLayout(layout) {
+    this.globalstate.layout = layout;
+    if (!this.globalstate.layout.modes.includes(this.globalstate.mode))
+      this.setMode(this.globalstate.layout.modes[0]);
+  }
+
+  setMode(mode) {
+    if (this.globalstate.layout.modes.includes(mode)) {
+      this.globalstate.mode = mode;
+    }
+  }
+
+  setAuto(auto) {
+    this.globalstate.auto = auto;
+  }
+
+  setSession(session) {
+    this.globalstate.session = session;
+    this.setLayout(Layouts.fromSession(session));
+    if (session.type == "F") this.setSpeaker(null);
+  }
+
+  setSpeaker(speaker) {
+    this.globalstate.speaker = speaker;
   }
 
   receiveMessage(msg, res) {
@@ -53,7 +80,8 @@ class ControlBot extends TelegramBot {
       if (page.checkPermission()) {
         this.userstates[user] = page;
       } else {
-        res.textln("注意 你可能沒有權限執行此項目");
+        res.textln("你沒有權限執行此項目");
+        this.userstates[user] = new this.defaultPage(this, user, data, res);
       }
     }
 
