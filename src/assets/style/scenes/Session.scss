@@ -1,36 +1,49 @@
 .session {
-    &-top,
-    &-bottom {
-        height: 90px;
+  &-top,
+  &-bottom {
+    position: relative;
+    height: 90px;
+  }
+
+  &-top {
+    background-color: black;
+  }
+
+  &-bottom {
+    background-color: black;
+  }
+
+  &-middle {
+    position: relative;
+    height: 900px;
+    display: flex;
+  }
+
+  &-left {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    background-color: transparent;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 320px;
+    height: 900px;
+
+    &_top {
+      position: relative;
+      height: 270px;
+      background-image: url("/img/cam1.png");
+      background-size: contain;
     }
 
-    &-top {
-        background-color: black;
+    &_bottom {
+      flex-grow: 1;
+      position: relative;
+      background-color: #111;
     }
-
-    &-bottom {
-        background-color: black;
-    }
-
-    &-middle {
-        height: 900px;
-        display: flex;
-    }
-
-    &-left {
-        width: 1600px;
-        height: 900px;
-        background-color: rgb(255, 178, 133);
-    }
-
-    &-right {
-        width: 320px;
-        background-color: rgb(87, 182, 87);
-        height: 900px;
-
-        &_top {
-            height: 270px;
-            background-color: rgb(56, 56, 228);
-        }
-    }
+  }
 }

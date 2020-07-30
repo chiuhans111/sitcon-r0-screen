@@ -1,13 +1,18 @@
 @import "./typography.scss";
 
 @import "./scenes/Session.scss";
+@import "./scenes/Forum.scss";
 
 @import "./sources/Topbar.scss";
+@import "./sources/Bottombar.scss";
+@import "./Sources/IRC.scss";
+@import "./Sources/Slido.scss";
+
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
 }

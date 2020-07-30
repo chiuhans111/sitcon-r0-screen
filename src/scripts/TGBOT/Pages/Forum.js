@@ -9,10 +9,11 @@ import Session from "./Session";
 import Scene from "./Scene";
 
 class Forum extends Page {
+  
+  
   initialize() {
     this.name = "論壇字卡";
     this.permissions = [permissions.forumCardControl];
-
     let me = this;
 
     if (me.bot.globalstate.layout == Layouts.Forum) {

@@ -1,3 +1,7 @@
-.bottombar{
-    
+.bottombar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  background-image: url("/img/bottom.png");
+  background-size: contain;
 }

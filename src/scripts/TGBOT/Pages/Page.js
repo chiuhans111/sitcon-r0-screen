@@ -4,6 +4,7 @@ import permissions from "../authenticate/permissions";
 class Page {
   name = "預設頁面";
   permissions = [permissions.visit];
+
   constructor(bot, user, data, res) {
     this.bot = bot;
     this.user = user;
@@ -14,7 +15,10 @@ class Page {
     this.initialize();
     this.res.textln(this.name);
 
-    if (guardian.check(this.user, this.permissions)) this.res.send();
+    if (guardian.check(this.user, this.permissions)) {
+      this.res.send();
+      console.log("send initiated page");
+    }
   }
 
   reset() {

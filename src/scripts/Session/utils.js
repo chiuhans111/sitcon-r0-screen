@@ -56,6 +56,23 @@ function process(data) {
     room.map((session, i, arr) => {
       if (i > 0) session.prev = arr[i - 1];
       if (i + 1 < arr.length) session.next = arr[i + 1];
+
+      // slido code
+      let me = session;
+      let qa = session.qa;
+      session.hash = "";
+      session.code = "";
+
+      if (qa) {
+        let hash = qa.split("/").pop();
+        me.hash = hash;
+        let xhr = new XMLHttpRequest();
+        xhr.open("get", "https://wall.sli.do/api/v0.5/events?hash=" + hash);
+        xhr.onload = function() {
+          me.code = JSON.parse(xhr.response)[0].code;
+        };
+        xhr.send();
+      }
     });
   }
 

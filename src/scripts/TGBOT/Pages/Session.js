@@ -63,7 +63,7 @@ class Session extends Page {
     this.res.addBtnRow();
 
     this.addBtn("導播", [permissions.layoutControl], () => Scene);
-    this.addBtn("關", [], () => Start);
+    this.addBtn("[議程]", [], () => Start);
     this.addBtn("論壇", [permissions.ForumControl], () => Forum);
   }
 }

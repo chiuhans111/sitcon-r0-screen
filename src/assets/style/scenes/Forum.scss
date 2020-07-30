@@ -1,0 +1,28 @@
+.forum {
+  &-left {
+    position: relative;
+    height: 900px;
+    background-color: transparent;
+    flex-grow: 1;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 550px;
+    height: 900px;
+
+    &_top {
+      position: relative;
+      height: 450px;
+      background-image: url("/img/cam2.png");
+    }
+
+    &_bottom {
+      flex-grow: 1;
+      position: relative;
+      background-image: url("/img/CARD_EMPTY.png");
+    }
+  }
+}

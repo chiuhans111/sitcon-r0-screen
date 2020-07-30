@@ -7,16 +7,14 @@ import Session from "./Session";
 import Forum from "./Forum";
 
 class Start extends Page {
-  name = "SITCON 2020 控制台";
-
-  permissions = [];
-
   // checkPermission() {
   //   return guardian.check(this.user, this.permissions);
   // }
 
   initialize() {
-    console.log('起始畫面')
+    this.name = "SITCON 2020 控制台";
+    this.permissions = [];
+    console.log("起始畫面");
     this.res.textln("welcome @" + this.user + " !");
     this.res.textln("你能使用的權限：");
     this.res.textln(
