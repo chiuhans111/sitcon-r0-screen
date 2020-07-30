@@ -1,50 +1,50 @@
 .topbar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  background-image: url("/img/top.png");
+  background-size: 100% 100%;
+
+  &-title {
+    position: relative;
+    color: black;
+    background-color: white;
+    font-size: 24px;
     display: flex;
-    height: 100%;
-    align-items: center;
-    background-image: url("/img/top.png");
-    background-size: cover;
+    padding: 8px 12px 8px 30px;
+    font-weight: 600;
 
-    &-title {
-        position: relative;
-        color: black;
-        background-color: white;
-        font-size: 24px;
-        display: flex;
-        padding: 8px 12px 8px 30px;
-        font-weight: 600;
-
-        &_time {
-            background-color: #111;
-            color: white;
-            border-radius: 8px;
-            padding: 0px 8px;
-            margin-right: 24px;
-        }
-
-        &_title {
-            margin-right: 24px;
-        }
-
-        &_speakers {
-            font-weight: 400;
-            &-speaker {
-                margin: 10px;
-            }
-        }
-
-        &::after {
-            display: block;
-            position: absolute;
-            right: -10px;
-            top: 0px;
-
-            content: "";
-
-            height: 100%;
-            width: 20px;
-            background-color: white;
-            transform: skew(-10.1deg);
-        }
+    &_time {
+      background-color: #111;
+      color: white;
+      border-radius: 8px;
+      padding: 0px 8px;
+      margin-right: 24px;
     }
+
+    &_title {
+      margin-right: 24px;
+    }
+
+    &_speakers {
+      font-weight: 400;
+      &-speaker {
+        margin: 10px;
+      }
+    }
+
+    &::after {
+      display: block;
+      position: absolute;
+      right: -10px;
+      top: 0px;
+
+      content: "";
+
+      height: 100%;
+      width: 20px;
+      background-color: white;
+      transform: skew(-10.1deg);
+    }
+  }
 }

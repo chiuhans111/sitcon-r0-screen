@@ -7,15 +7,64 @@
   height: 100%;
 
   &_content {
-    width: 100%;
+    background-color: black;
+
+    color: white;
+    overflow: hidden;
+
     height: 100%;
-    background-color: gray;
+
+    box-sizing: border-box;
+
     transition: opacity 0.5s;
     &-show {
       opacity: 1;
     }
     &-hide {
       opacity: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_message {
+    background-color: red($color: #000000);
+    margin: 2px 4px;
+    padding: 0px 4px 8px;
+
+    box-sizing: border-box;
+    // border: solid 1px #aaa;
+    border-radius: 4px;
+    line-height: 1;
+
+    &-time {
+      font-size: 16px;
+      background-color: white;
+      color: black;
+      text-align: center;
+      margin: 4px;
+      border-radius: 4px;
+    }
+
+    &-username {
+      display: inline;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    &-text {
+      display: inline;
+      font-size: 16px;
+    }
+
+    &-sticker {
+      display: inline-block;
+      width: 50%;
+      height: 100px;
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: contain;
     }
   }
 }

@@ -24,6 +24,7 @@ class Page {
   reset() {
     this.btns = [];
     this.inlineBtns = [];
+    this.inputs = null;
     this.commands = [];
     this.res.reset();
     this.inlineCounter = 0;
@@ -47,6 +48,14 @@ class Page {
     if (guardian.check(this.user, permissions)) {
       this.inlineBtns.push({ cbid, permissions, callback });
       this.res.addInlineBtn(text, cbid);
+    }
+  }
+
+  input(question, permissions, callback) {
+    if (guardian.check(this.user, permissions)) {
+      this.res.textln(question);
+      this.res.send();
+      this.inputs = { permissions, callback };
     }
   }
 
@@ -108,6 +117,13 @@ class Page {
 
     if (data.message && data.text) {
       if (data.text == "/start") return this.bot.defaultPage;
+
+      if (this.inputs) {
+        if (guardian.check(this.user, this.inputs.permissions)) {
+          return this.inputs.callback(data.text);
+        }
+      }
+
       for (let command of this.commands) {
         if (data.text == command.command) {
           if (guardian.check(this.user, command.permissions)) {

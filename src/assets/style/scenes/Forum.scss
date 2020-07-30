@@ -17,12 +17,31 @@
       position: relative;
       height: 450px;
       background-image: url("/img/cam2.png");
+      background-size: 100% 100%;
     }
 
     &_bottom {
       flex-grow: 1;
       position: relative;
       background-image: url("/img/CARD_EMPTY.png");
+      background-size: 100% 100%;
+    }
+  }
+
+  &_speaker {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background-size: 100% 100%;
+
+    opacity: 0;
+
+    transition: opacity 0.5s;
+
+    &-show {
+      opacity: 1;
     }
   }
 }

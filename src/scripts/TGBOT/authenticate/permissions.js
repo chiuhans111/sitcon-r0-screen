@@ -1,4 +1,7 @@
 const permissions = {
+  admin: {
+    title: "管理員",
+  },
   ForumControl: {
     title: "論壇控制",
   },
@@ -14,12 +17,9 @@ const permissions = {
   sessionControl: {
     title: "議程控制",
   },
-  roleManagement: {
-    title: "權限控制",
-  },
   participate: {
     title: "參與",
-  }
+  },
 };
 
 export default permissions;

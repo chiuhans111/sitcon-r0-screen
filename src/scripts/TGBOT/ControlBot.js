@@ -7,6 +7,7 @@ import SessionData from "../Session";
 
 import guardian from "./authenticate/guardian";
 import permissions from "./authenticate/permissions";
+
 class ControlBot extends TelegramBot {
   constructor(token) {
     super(token);
@@ -140,6 +141,7 @@ class ControlBot extends TelegramBot {
         let page = new nextPage(this, user, data, res);
         console.log(page);
         if (page.checkPermission()) {
+          delete this.userstates[user];
           this.userstates[user] = page;
         } else {
           res.textln("你沒有權限執行此項目");
