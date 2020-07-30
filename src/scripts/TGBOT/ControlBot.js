@@ -55,6 +55,7 @@ class ControlBot extends TelegramBot {
   setAuto(auto) {
     if (auto == this.globalstate.auto) return;
     this.globalstate.auto = auto;
+
     this.broadcastUpdate("更新議程自動規則：" + auto, [
       permissions.participate,
     ]);
@@ -65,6 +66,7 @@ class ControlBot extends TelegramBot {
     this.globalstate.session = session;
     this.setLayout(Layouts.fromSession(session));
     if (session.type == "F") this.setSpeaker(null);
+
     this.broadcastUpdate("更新議程為：" + session.title, [
       permissions.participate,
     ]);
@@ -83,7 +85,7 @@ class ControlBot extends TelegramBot {
       let session = SessionData.fromNow();
       if (session) {
         this.setSession(session);
-        console.log(session);
+        // console.log(session);
       }
     }
   }
@@ -112,15 +114,12 @@ class ControlBot extends TelegramBot {
   }
 
   receiveInput(user, data, res) {
-    
     if (user == undefined) {
       res.textln("歡迎來到 SITCON 控台");
       res.textln("你必須有 telegram username 才能使用此服務。");
       res.send();
       return;
     }
-
-    
 
     if (this.userstates[user] == null) {
       this.userstates[user] = new this.defaultPage(this, user, data, res);
@@ -137,21 +136,22 @@ class ControlBot extends TelegramBot {
     let nextPage = this.userstates[user].handle(data, res);
 
     if (nextPage) {
-      let page = new nextPage(this, user, data, res);
-      console.log(page);
-      if (page.checkPermission()) {
-        this.userstates[user] = page;
-      } else {
-        res.textln("你沒有權限執行此項目");
-        this.userstates[user] = new this.defaultPage(this, user, data, res);
-      }
+      setTimeout(() => {
+        let page = new nextPage(this, user, data, res);
+        console.log(page);
+        if (page.checkPermission()) {
+          this.userstates[user] = page;
+        } else {
+          res.textln("你沒有權限執行此項目");
+          this.userstates[user] = new this.defaultPage(this, user, data, res);
+        }
+      }, 0);
     }
 
     if (nextPage === false) {
       res.textln("錯誤的操作。");
-      res.send();
+      res.send(true);
     }
-
     // res.send();
   }
 }

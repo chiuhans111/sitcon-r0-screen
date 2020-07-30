@@ -112,6 +112,8 @@ class TelegramBotResponse {
     this.last_inline_keyboard_result = null;
 
     this.reset();
+
+    this.pending = new Promise((done) => done());
   }
 
   reset() {
@@ -127,8 +129,9 @@ class TelegramBotResponse {
     this.done = false;
   }
 
-  send() {
+  send(quick = false) {
     let me = this;
+    console.log(this.text);
 
     if (this.text == null && this.inline_keyboard == null) return;
 
@@ -141,18 +144,24 @@ class TelegramBotResponse {
       };
     }
 
-    this.bot.request("sendMessage", payload);
+    if (quick) this.bot.request("sendMessage", payload);
+    else
+      this.pending = this.pending.then(() =>
+        this.bot.request("sendMessage", payload)
+      );
 
     if (this.inline_keyboard !== null) {
-      this.bot
-        .request("sendMessage", {
-          chat_id: this.chat_id,
-          text: "↓",
-          reply_markup: this.getInlineKeyboardReplyMarkup(),
-        })
-        .then(function(result) {
-          me.last_inline_keyboard_result = result;
-        });
+      this.pending = this.pending.then(() =>
+        this.bot
+          .request("sendMessage", {
+            chat_id: this.chat_id,
+            text: "↓",
+            reply_markup: this.getInlineKeyboardReplyMarkup(),
+          })
+          .then(function(result) {
+            me.last_inline_keyboard_result = result;
+          })
+      );
     }
 
     if (this.answer_callback_id) {
@@ -164,6 +173,7 @@ class TelegramBotResponse {
 
   editInlineKeyboard() {
     if (this.last_inline_keyboard_result == null) return;
+    if (this.inline_keyboard == null) return;
     let chat_id = this.last_inline_keyboard_result.result.chat.id;
     let message_id = this.last_inline_keyboard_result.result.message_id;
     let reply_markup = this.getInlineKeyboardReplyMarkup();

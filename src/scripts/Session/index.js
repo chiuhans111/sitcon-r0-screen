@@ -2,11 +2,10 @@ import session from "./session.json";
 import utils from "./utils";
 import time from "../Time/time";
 
-const DAY = 1000 * 60 * 60 * 24;
-const DAYOFFSET = new Date(0).getTime();
-
 function normalizeTime(time) {
-  return (time - DAYOFFSET) % DAY;
+  let start = new Date(time);
+  start.setHours(0, 0, 0, 0);
+  return time - start.getTime();
 }
 
 let data = {
@@ -14,7 +13,6 @@ let data = {
   rooms: {},
   fromTime(time, roomId = "R0") {
     time = normalizeTime(time);
-    console.log(new Date(time));
 
     let room = this.rooms[roomId];
     let remain = room.filter((session) => {

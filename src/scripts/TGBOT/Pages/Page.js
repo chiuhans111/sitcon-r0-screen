@@ -13,7 +13,8 @@ class Page {
     this.reset();
     this.initialize();
     this.res.textln(this.name);
-    this.res.send();
+
+    if (guardian.check(this.user, this.permissions)) this.res.send();
   }
 
   reset() {
@@ -45,27 +46,42 @@ class Page {
     }
   }
 
+  pendingReloadMsg = [];
+  pendingReload = null;
+
   reload(msg) {
-    this.reset();
-    this.initialize();
-    this.res.setText(msg);
-    if (this.inlineBtns.length == 0) this.res.send();
-    else this.res.editInlineKeyboard();
-    this.res.reset();
+    this.pendingReloadMsg.push(msg);
+
+    if (this.pendingReload) {
+      clearTimeout(this.pendingReload);
+    }
+
+    this.pendingReload = setTimeout(() => {
+      this.reset();
+      this.initialize();
+      this.res.setText(this.pendingReloadMsg.join("\n"));
+
+      if (this.inlineBtns.length == 0) this.res.send();
+      else this.res.editInlineKeyboard();
+
+      this.res.reset();
+      this.pendingReload = null;
+      this.pendingReloadMsg = [];
+    }, 0);
   }
 
-  requestReload() {
-    if (!this.pandingReload) {
-      let me = this;
-      this.res.reset();
-      this.res.textln("狀態更新 /update");
-      this.addCommand("/update", this.permissions, function() {
-        me.reload();
-      });
-      this.res.send();
-    }
-    this.pandingReload = true;
-  }
+  // requestReload() {
+  //   if (!this.pandingReload) {
+  //     let me = this;
+  //     this.res.reset();
+  //     this.res.textln("狀態更新 /update");
+  //     this.addCommand("/update", this.permissions, function() {
+  //       me.reload();
+  //     });
+  //     this.res.send();
+  //   }
+  //   this.pandingReload = true;
+  // }
 
   initialize() {
     this.res.setText("welcome " + this.user);

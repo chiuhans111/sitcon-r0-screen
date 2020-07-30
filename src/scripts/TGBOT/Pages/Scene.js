@@ -18,8 +18,6 @@ class Scene extends Page {
 
       this.addBtn(btnText, this.permissions, function() {
         me.bot.setMode(mode);
-        me.res.textln("設定版面成功");
-        me.res.send();
       });
     }
     this.res.addBtnRow();

@@ -52,16 +52,13 @@ class Session extends Page {
     this.permissions = [permissions.sessionControl];
 
     this.addBtn("手動", this.permissions, function() {
+      
       me.bot.setAuto(false);
-      me.res.textln("已設定議程為手動。");
-      me.res.send();
       return SessionSelector;
     });
 
     this.addBtn("自動", this.permissions, function() {
       me.bot.setAuto(true);
-      // me.res.textln("已設定議程為自動。");
-      // me.res.send();
     });
 
     this.res.addBtnRow();
