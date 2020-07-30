@@ -20,28 +20,33 @@ class SessionSelector extends Page {
     let me = this;
 
     let currentSession = SessionData.fromNow();
-    SessionData.rooms["R0"].map((session, i) => {
-      let name = session.title;
-      let btnText = FormatTime.hhmm(session.start) + " " + name.substr(0, 7);
 
-      if (this.bot.globalstate.session == session)
-        btnText = "[" + btnText + "]";
+    SessionData.rooms["R0"]
+      .filter((session) => !session.isBreak)
+      .map((session, i) => {
+        let name = session.title;
+        let btnText = FormatTime.hhmm(session.start) + " " + name.substr(0, 7);
 
-      if (currentSession == session) btnText = "> " + btnText;
-      me.addInlineBtn(btnText, this.permissions, () => {
-        me.res.textln("議程設定為：");
-        me.res.textln(
-          FormatTime.hhmm(session.start) + " - " + FormatTime.hhmm(session.end)
-        );
-        me.res.textln(session.title);
-        me.res.send();
-        me.bot.setSession(session);
+        if (this.bot.globalstate.session == session)
+          btnText = "[" + btnText + "]";
+
+        if (currentSession == session) btnText = "> " + btnText;
+        me.addInlineBtn(btnText, this.permissions, () => {
+          me.res.textln("議程設定為：");
+          me.res.textln(
+            FormatTime.hhmm(session.start) +
+              " - " +
+              FormatTime.hhmm(session.end)
+          );
+          me.res.textln(session.title);
+          me.res.send();
+          me.bot.setSession(session);
+        });
+
+        if (i % 2 == 1) {
+          me.res.addInlineBtnRow();
+        }
       });
-
-      if (i % 2 == 1) {
-        me.res.addInlineBtnRow();
-      }
-    });
   }
 }
 
