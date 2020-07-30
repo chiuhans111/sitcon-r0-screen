@@ -43,7 +43,11 @@ function process(data) {
     room
       .filter((session) => {
         session.isBreak = false;
-        if (session.type == "Ev") {
+        if (
+          session.type == "Ev" &&
+          session.title != "開幕" &&
+          session.title != "閉幕"
+        ) {
           session.isBreak = true;
           return false;
         }

@@ -1,22 +1,21 @@
 import permissions from "../authenticate/permissions";
 import Page from "./Page";
 
-import Start from "./Start";
+// import Start from "./Start";
 import SessionData from "../../Session";
 
 import FormatTime from "../../Format/time";
-import Scene from "./Scene";
-import Forum from "./Forum";
+import ProductionPage from "./ProductionPage";
+import Start from "./Start";
 
 class SessionSelector extends Page {
   initialize() {
     this.name = "議程選擇";
     this.permissions = [permissions.sessionControl];
 
-    this.addBtn("導播", [permissions.layoutControl], () => Scene);
-    this.addBtn("議程", [permissions.sessionControl], () => Session);
-    this.addBtn("論壇", [permissions.ForumControl], () => Forum);
-
+    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("回首頁", [permissions.productionControl], () => Start);
+    
     let me = this;
 
     let currentSession = SessionData.fromNow();
@@ -50,27 +49,26 @@ class SessionSelector extends Page {
   }
 }
 
-class Session extends Page {
+class SessionPage extends Page {
   initialize() {
     let me = this;
     this.name = "議程管理";
     this.permissions = [permissions.sessionControl];
 
-    this.addBtn("手動", this.permissions, function() {
+    this.addBtn("手動議程", this.permissions, function() {
       me.bot.setAuto(false);
       return SessionSelector;
     });
 
-    this.addBtn("自動", this.permissions, function() {
+    this.addBtn("自動議程", this.permissions, function() {
       me.bot.setAuto(true);
     });
 
     this.res.addBtnRow();
 
-    this.addBtn("導播", [permissions.layoutControl], () => Scene);
-    this.addBtn("[議程]", [], () => Start);
-    this.addBtn("論壇", [permissions.ForumControl], () => Forum);
+    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("回首頁", [permissions.productionControl], () => Start);
   }
 }
 
-export default Session;
+export default SessionPage;

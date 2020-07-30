@@ -18,7 +18,7 @@ const Layouts = {
 
   fromSession(session) {
     console.log(session);
-    if (session.type == "Ev") return this.STBY;
+
     if (session.type == "F") return this.Forum;
     if (session.type == "L") return this.LightningTalk;
 

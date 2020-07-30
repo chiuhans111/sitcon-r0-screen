@@ -10,6 +10,7 @@ class Page {
     this.user = user;
     this.data = data;
     this.res = res;
+    this.rand = Math.random();
 
     this.reset();
     this.initialize();
@@ -44,7 +45,7 @@ class Page {
   }
 
   addInlineBtn(text, permissions, callback) {
-    let cbid = "_" + (this.inlineCounter++ % 100);
+    let cbid = this.rand + "_" + (this.inlineCounter++ % 100);
     if (guardian.check(this.user, permissions)) {
       this.inlineBtns.push({ cbid, permissions, callback });
       this.res.addInlineBtn(text, cbid);

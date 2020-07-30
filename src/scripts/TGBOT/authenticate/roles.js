@@ -2,30 +2,28 @@ import permissions from "./permissions";
 
 const roles = {
   // all permissions is avaliable for admin
-  admin: Object.keys(permissions).map((key) => permissions[key]),
-  // Scene
-  sceneOp: [permissions.layoutControl, permissions.participate],
-  // Session
-  sessionOp: [permissions.sessionControl, permissions.participate],
-  // only card control for forum operator
-  forumOp: [
-    permissions.ForumControl,
-    permissions.forumCardControl,
-    permissions.forumModeControl,
-    permissions.participate,
-  ],
-  forumModeOp: [
-    permissions.ForumControl,
-    permissions.forumModeControl,
-    permissions.participate,
-  ],
-  forumCardOp: [
-    permissions.ForumControl,
-    permissions.forumCardControl,
-    permissions.participate,
-  ],
+  admin: {
+    title: "管理員",
+    permissions: Object.keys(permissions).map((key) => permissions[key]),
+  },
+
+  // all permission except for session control for staff
+  staff: {
+    title: "工人",
+
+    permissions: [
+      permissions.modeControl,
+      permissions.forumControl,
+      permissions.productionControl,
+      permissions.participate,
+    ],
+  },
+
   // default visitor have no permissions
-  visitor: [],
+  visitor: {
+    title: "一般人",
+    permissions: [],
+  },
 };
 
 export default roles;

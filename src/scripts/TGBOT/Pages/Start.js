@@ -2,9 +2,10 @@ import guardian from "../authenticate/guardian";
 import permissions from "../authenticate/permissions";
 import Page from "./Page";
 
-import Scene from "./Scene";
-import Session from "./Session";
-import Forum from "./Forum";
+import ProductionPage from "./ProductionPage";
+import SessionPage from "./SessionPage";
+import AdminPage from "./AdminPage";
+// import Forum from "./Forum";
 
 class Start extends Page {
   // checkPermission() {
@@ -24,9 +25,10 @@ class Start extends Page {
         .join("、")
     );
 
-    this.addBtn("導播", [permissions.layoutControl], () => Scene);
-    this.addBtn("議程", [permissions.sessionControl], () => Session);
-    this.addBtn("論壇", [permissions.ForumControl], () => Forum);
+    
+    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("議程", [permissions.sessionControl], () => SessionPage);
+    this.addBtn("管理", [permissions.admin], () => AdminPage);
   }
 }
 
