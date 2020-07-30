@@ -11,7 +11,7 @@ const Layouts = {
     title: "Forum",
     modes: ["PPT", "SLIDO"],
   },
-  LightingTalk: {
+  LightningTalk: {
     title: "LightingTalk",
     modes: ["STBY", "PPT", "TIMEUP"],
   },
@@ -20,7 +20,8 @@ const Layouts = {
     console.log(session);
     if (session.type == "Ev") return this.STBY;
     if (session.type == "F") return this.Forum;
-    if (session.type == "L") return this.LightingTalk;
+    if (session.type == "L") return this.LightningTalk;
+
     return this.Session;
   },
 };

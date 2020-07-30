@@ -2,6 +2,7 @@
   <div id="app">
     <Session v-if="state.layout == Layouts.Session"></Session>
     <Forum v-if="state.layout == Layouts.Forum"></Forum>
+    <LightningTalk v-if="state.layout == Layouts.LightningTalk">this is lt</LightningTalk>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import TGBOT from "./scripts/TGBOT";
 import Session from "./components/scenes/Session";
 import Forum from "./components/scenes/Forum";
+import LightningTalk from "./components/scenes/LightningTalk";
 
 import Layouts from "./scripts/Scene/Layouts";
 
@@ -17,6 +19,7 @@ export default {
   components: {
     Session,
     Forum,
+    LightningTalk,
   },
   data() {
     return {

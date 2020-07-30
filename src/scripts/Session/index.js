@@ -17,21 +17,16 @@ let data = {
     let room = this.rooms[roomId];
     let remain = room.filter((session) => {
       // if (session.start.getTime() > time) return false;
-      session.isBreak = false;
-      if (session.type == "Ev" && session.title.match("休息")) {
-        session.isBreak = true;
+      if (session.isBreak) {
         return false;
       }
       if (session.nextTalk) {
         if (time > normalizeTime(session.nextTalk.start.getTime()))
           return false;
-      } else if (session.next) {
-        if (time > normalizeTime(session.next.start.getTime())) return false;
       }
 
       return true;
     });
-
     if (remain.length > 0) return remain[0];
     return null;
   },

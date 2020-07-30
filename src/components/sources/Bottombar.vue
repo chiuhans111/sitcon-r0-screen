@@ -1,5 +1,3 @@
 <template>
-  <div class="bottombar">
-      Bottom bar
-  </div>
+  <div class="bottombar"></div>
 </template>

@@ -29,12 +29,13 @@ class TelegramBot {
     // console.log(this.lastUpdateId);
     let updates = await this.request("getUpdates", payload);
 
+
     if (!updates.ok) {
       console.error("getUpdate failed");
       return;
     }
 
-    // console.log(updates);
+    console.log(updates);
 
     await Promise.all(
       updates.result.map((update) => {

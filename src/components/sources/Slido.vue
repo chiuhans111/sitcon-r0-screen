@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       state: TGBOT().controlBot.globalstate,
-      code: "",
     };
   },
   computed: {

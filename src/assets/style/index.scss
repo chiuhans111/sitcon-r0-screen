@@ -2,12 +2,14 @@
 
 @import "./scenes/Session.scss";
 @import "./scenes/Forum.scss";
+@import "./scenes/LightningTalk.scss";
+@import "./scenes/LightningTalkTimeup.scss";
 
 @import "./sources/Topbar.scss";
 @import "./sources/Bottombar.scss";
 @import "./Sources/IRC.scss";
 @import "./Sources/Slido.scss";
-
+@import "./Sources/Camholder.scss";
 
 html,
 body {

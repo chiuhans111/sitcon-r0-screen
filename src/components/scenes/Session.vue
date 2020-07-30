@@ -8,12 +8,12 @@
         <Slido :show="state.mode == 'SLIDO+IRC'"></Slido>
       </div>
       <div class="session-right">
-        <div class="session-right_top"></div>
+        <div class="session-right_top">
+          <Camholder></Camholder>
+        </div>
         <div class="session-right_bottom">
           <Slido :show="state.mode == 'PPT+SLIDO'"></Slido>
-          <IRC
-            :show="state.mode == 'PPT+IRC' || state.mode == 'SLIDO+IRC'"
-          ></IRC>
+          <IRC :show="state.mode == 'PPT+IRC' || state.mode == 'SLIDO+IRC'"></IRC>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@ import Bottombar from "../sources/Bottombar";
 import Topbar from "../sources/Topbar";
 import IRC from "../sources/IRC";
 import Slido from "../sources/Slido";
-
+import Camholder from "../sources/Camholder";
 
 export default {
   props: {},
@@ -39,6 +39,7 @@ export default {
     Topbar,
     IRC,
     Slido,
+    Camholder,
   },
   data() {
     return {

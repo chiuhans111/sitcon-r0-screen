@@ -1,5 +1,6 @@
 import TelegramBot from "./TelegramBot";
 import time from "../Format/time";
+import config from "../../../config";
 
 class IRCBot extends TelegramBot {
   constructor(token) {
@@ -13,6 +14,7 @@ class IRCBot extends TelegramBot {
     this.lastTime = "";
   }
   receiveMessage(message) {
+    if (message.chat.id !== config.bots.IRC.chat_id) return;
     this.ignoreConfirmed = true;
     let t = time.hhmm(message.date * 1000);
     if (this.lastTime != t) {

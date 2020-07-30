@@ -42,7 +42,11 @@ function process(data) {
     let room = rooms[i];
     room
       .filter((session) => {
-        if (session.type == "Ev") return false;
+        session.isBreak = false;
+        if (session.type == "Ev") {
+          session.isBreak = true;
+          return false;
+        }
         return true;
       })
       .map((session, i, arr) => {

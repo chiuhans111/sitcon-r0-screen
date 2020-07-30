@@ -1,0 +1,72 @@
+.lightningtalk {
+    &-stby {
+        position: relative;
+
+        width: 100%;
+        height: 100%;
+        background-image: url("/img/lightningTalkBG.png");
+        background-size: 100% 100%;
+
+        transition: opacity 0.2s;
+        opacity: 0;
+
+        &-show {
+            opacity: 1;
+        }
+
+        &_img {
+            position: absolute;
+            top: 0px;
+            left: -120px;
+            animation: float 10s infinite ease-in-out;
+        }
+        overflow: hidden;
+
+        &_strikes {
+            path {
+                stroke-dasharray: 2000, 2000;
+                animation: strike 4s infinite;
+            }
+
+            @for $i from 0 through 10 {
+                path:nth-child(11n + #{$i}) {
+                    animation-delay: #{$i/11 * 4}s;
+                }
+            }
+
+            position: absolute;
+            top: 0px;
+            left: -120px;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-10px, -50px);
+    }
+}
+
+@keyframes strike {
+    0% {
+        stroke-dashoffset: 4000;
+        opacity: 0;
+    }
+    5% {
+        stroke-dashoffset: 2000;
+        opacity: 1;
+    }
+    40%,
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+}
