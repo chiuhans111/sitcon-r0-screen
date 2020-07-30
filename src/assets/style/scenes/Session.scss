@@ -1,4 +1,8 @@
 .session {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   &-top,
   &-bottom {
     position: relative;
@@ -15,14 +19,14 @@
 
   &-middle {
     position: relative;
-    height: 900px;
     display: flex;
+    flex-grow: 1;
   }
 
   &-left {
+    flex-grow: 1;
     position: relative;
     width: 1600px;
-    height: 900px;
     background-color: transparent;
   }
 
@@ -31,13 +35,13 @@
     flex-direction: column;
     position: relative;
     width: 320px;
-    height: 900px;
+    height: 100%;
 
     &_top {
       position: relative;
-      height: 270px;
+      height: 240px;
       background-image: url("/img/cam1.png");
-      background-size: contain;
+      background-size: 100% 100%;
     }
 
     &_bottom {

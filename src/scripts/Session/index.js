@@ -9,7 +9,7 @@ function normalizeTime(time) {
 }
 
 let data = {
-  session: {},
+  // session: {},
   rooms: {},
   fromTime(time, roomId = "R0") {
     time = normalizeTime(time);
@@ -38,13 +38,13 @@ let data = {
 
 function loadSession(session) {
   // console.log(session);
-  data.session = session;
+  // data.session = session;
   data.rooms = utils.process(session);
 }
 
 loadSession(session);
 
-var xhr = new XMLHttpRequest();
+let xhr = new XMLHttpRequest();
 xhr.open("get", "https://sitcon.org/2020/json/session.json");
 xhr.onload = function() {
   loadSession(JSON.parse(xhr.response));

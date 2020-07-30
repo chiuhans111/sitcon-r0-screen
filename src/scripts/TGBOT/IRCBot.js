@@ -1,22 +1,33 @@
-import TelegramBot from "./TelegramBot"
+import TelegramBot from "./TelegramBot";
+import time from "../Format/time";
 
 class IRCBot extends TelegramBot {
   constructor(token) {
-    super(token)
+    super(token);
+    this.globalstate = {
+      messages: [],
+    };
 
-    this.messages = []
-    this.maxMessages = 25
-    this.ignoreConfirmed = false
+    this.maxMessages = 25;
+    this.ignoreConfirmed = false;
+    this.lastTime = "";
   }
   receiveMessage(message) {
-    this.ignoreConfirmed = true
-    this.messages.push(message)
-    if (this.messages.length > this.maxMessages) {
-      this.messages = this.messages.slice(
-        this.messages.length - this.maxMessages
-      )
+    this.ignoreConfirmed = true;
+    let t = time.hhmm(message.date * 1000);
+    if (this.lastTime != t) {
+      message.t = t;
+      this.lastTime = t;
+    }
+    console.log(message);
+
+    this.globalstate.messages.push(message);
+    if (this.globalstate.messages.length > this.maxMessages) {
+      this.globalstate.messages = this.globalstate.messages.slice(
+        this.globalstate.messages.length - this.maxMessages
+      );
     }
   }
 }
 
-export default IRCBot
+export default IRCBot;

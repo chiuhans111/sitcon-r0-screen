@@ -9,11 +9,19 @@
           <Slido :show="state.mode == 'SLIDO'"></Slido>
         </div>
         <div class="forum-right">
-          <div class="forum-right_top">
-
-          </div>
+          <div class="forum-right_top"></div>
           <div class="forum-right_bottom">
-          
+            <div
+              v-for="(speaker, i) in Speakers"
+              :class="{
+                forum_speaker: true,
+                'forum_speaker-show': state.speaker == speaker,
+              }"
+              :key="'speaker-' + i"
+              :style="{
+                backgroundImage: `url(${speaker.img})`,
+              }"
+            ></div>
           </div>
         </div>
       </div>
@@ -30,6 +38,9 @@ import TGBOT from "../../scripts/TGBOT";
 import Bottombar from "../sources/Bottombar";
 import Topbar from "../sources/Topbar";
 import Slido from "../sources/Slido";
+
+import Speakers from "../../scripts/Scene/Speakers";
+
 export default {
   props: {},
   components: {
@@ -39,7 +50,8 @@ export default {
   },
   data() {
     return {
-        state: TGBOT().controlBot.globalstate,
+      state: TGBOT().controlBot.globalstate,
+      Speakers,
     };
   },
 };
