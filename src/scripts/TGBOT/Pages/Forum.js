@@ -53,7 +53,7 @@ class Forum extends Page {
 
     this.addBtn("導播", [permissions.layoutControl], () => Scene);
     this.addBtn("議程", [permissions.sessionControl], () => Session);
-    this.addBtn("↓", [], () => Start);
+    this.addBtn("[論壇]", [], () => Start);
   }
 }
 

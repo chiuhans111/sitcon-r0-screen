@@ -22,7 +22,7 @@ class Scene extends Page {
     }
     this.res.addBtnRow();
 
-    this.addBtn("↓", [], () => Start);
+    this.addBtn("[導播]", [], () => Start);
     this.addBtn("議程", [permissions.sessionControl], () => Session);
     this.addBtn("論壇", [permissions.forumCardControl], () => Forum);
   }

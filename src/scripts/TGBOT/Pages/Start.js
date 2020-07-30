@@ -16,6 +16,7 @@ class Start extends Page {
   // }
 
   initialize() {
+    console.log('起始畫面')
     this.res.textln("welcome @" + this.user + " !");
     this.res.textln("你能使用的權限：");
     this.res.textln(

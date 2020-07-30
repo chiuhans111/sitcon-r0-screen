@@ -52,7 +52,6 @@ class Session extends Page {
     this.permissions = [permissions.sessionControl];
 
     this.addBtn("手動", this.permissions, function() {
-      
       me.bot.setAuto(false);
       return SessionSelector;
     });
@@ -64,7 +63,7 @@ class Session extends Page {
     this.res.addBtnRow();
 
     this.addBtn("導播", [permissions.layoutControl], () => Scene);
-    this.addBtn("↓", [], () => Start);
+    this.addBtn("關", [], () => Start);
     this.addBtn("論壇", [permissions.ForumControl], () => Forum);
   }
 }
