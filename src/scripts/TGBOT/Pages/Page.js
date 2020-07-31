@@ -180,12 +180,12 @@ class Page {
         }
       }
     } else {
-      this.res.setText("我看不懂@@");
-      this.res.send();
+      // this.res.setText("我看不懂@@");
+      // this.res.send();
       return null;
     }
 
-    this.res.send();
+    // this.res.send();
 
     return false;
   }

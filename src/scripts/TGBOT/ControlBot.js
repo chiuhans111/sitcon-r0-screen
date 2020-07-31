@@ -185,8 +185,8 @@ class ControlBot extends TelegramBot {
     }
 
     if (nextPage === false) {
-      res.textln("錯誤的操作。");
-      res.send(true);
+      // res.textln("錯誤的操作。");
+      // res.send(true);
     }
     // res.send();
   }
