@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <Session v-if="state.layout == Layouts.Session"></Session>
+    <Session
+      v-if="state.layout == Layouts.Session || state.layout == Layouts.Event"
+    ></Session>
     <Forum v-if="state.layout == Layouts.Forum"></Forum>
-    <LightningTalk v-if="state.layout == Layouts.LightningTalk">this is lt</LightningTalk>
+    <LightningTalk v-if="state.layout == Layouts.LightningTalk"></LightningTalk>
   </div>
 </template>
 

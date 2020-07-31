@@ -4,7 +4,7 @@ import Page from "./Page";
 import Layouts from "../../Scene/Layouts";
 import Speakers from "../../Scene/Speakers";
 import Start from "./Start";
-import SessionPage from "./SessionPage"
+import SessionPage from "./SessionPage";
 
 class ProductionPage extends Page {
   initialize() {
@@ -43,8 +43,11 @@ class ProductionPage extends Page {
       });
     }
 
-    this.addBtn("↓", this.permissions, () => Start);
-    this.addBtn("議程", [permissions.productionControl], () => SessionPage);
+    this.res.addBtnRow();
+
+
+    this.addBtn("↓", [permissions.admin], () => Start);
+    this.addBtn("議程", [permissions.sessionControl], () => SessionPage);
   }
 }
 

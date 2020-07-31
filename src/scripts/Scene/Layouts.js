@@ -7,6 +7,10 @@ const Layouts = {
     title: "Session",
     modes: ["PPT+IRC", "SLIDO+IRC", "PPT+SLIDO"],
   },
+  Event: {
+    title: "Session",
+    modes: ["PPT+IRC"],
+  },
   Forum: {
     title: "Forum",
     modes: ["PPT", "SLIDO"],
@@ -21,6 +25,7 @@ const Layouts = {
 
     if (session.type == "F") return this.Forum;
     if (session.type == "L") return this.LightningTalk;
+    if (session.type == "Ev") return this.Event;
 
     return this.Session;
   },

@@ -75,7 +75,7 @@ function process(data) {
         let hash = qa.split("/").pop();
         me.hash = hash;
         let xhr = new XMLHttpRequest();
-        xhr.open("get", "https://wall.sli.do/api/v0.5/events?hash=" + hash);
+        xhr.open("get", "https://cors-anywhere.herokuapp.com/https://wall.sli.do/api/v0.5/events?hash=" + hash);
         xhr.onload = function() {
           me.code = JSON.parse(xhr.response)[0].code;
         };
