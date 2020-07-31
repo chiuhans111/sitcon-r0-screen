@@ -1,5 +1,6 @@
 import guardian from "../authenticate/guardian";
 import permissions from "../authenticate/permissions";
+import roles from "../authenticate/roles";
 
 class Page {
   name = "預設頁面";
@@ -117,7 +118,37 @@ class Page {
     this.res = res;
 
     if (data.message && data.text) {
+      // default important commands
       if (data.text == "/start") return this.bot.defaultPage;
+
+      // admin commands
+      if (guardian.check(this.user, [permissions.admin])) {
+        if (data.text.startsWith("/grant ")) {
+          let username = data.text.split(" ")[1];
+          if (username) {
+            guardian.grant(username, roles.staff);
+            this.res.textln("成功");
+            this.res.send();
+            return;
+          }
+        }
+        if (data.text.startsWith("/ban ")) {
+          let username = data.text.split(" ")[1];
+          if (username) {
+            guardian.ban(username);
+            this.res.textln("成功");
+            this.res.send();
+            return;
+          }
+        }
+      }
+
+      // commands
+      if (data.text == "/quit") {
+        this.res.setText("掰掰");
+        this.res.send();
+        return "quit";
+      }
 
       if (this.inputs) {
         if (guardian.check(this.user, this.inputs.permissions)) {

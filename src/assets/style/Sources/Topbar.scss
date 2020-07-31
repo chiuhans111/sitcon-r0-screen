@@ -13,6 +13,7 @@
     display: flex;
     padding: 8px 12px 8px 30px;
     font-weight: 600;
+    white-space: nowrap;
 
     &_time {
       background-color: #111;
@@ -45,6 +46,7 @@
       width: 20px;
       background-color: white;
       transform: skew(-10.1deg);
+      border-radius: 4px;
     }
   }
 }

@@ -136,6 +136,11 @@ class ControlBot extends TelegramBot {
 
     let nextPage = this.userstates[user].handle(data, res);
 
+    if (nextPage === "quit") {
+      delete this.userstates[user];
+      return;
+    }
+
     if (nextPage) {
       setTimeout(() => {
         let page = new nextPage(this, user, data, res);

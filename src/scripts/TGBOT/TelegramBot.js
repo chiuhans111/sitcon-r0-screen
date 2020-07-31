@@ -53,6 +53,10 @@ class TelegramBot {
           );
           response.answer_callback_id = callback_query.id;
           return this.receiveCallback(update.callback_query, response);
+        } else if(update.edited_message){
+          let message = update.edited_message;
+          let response = new TelegramBotResponse(this, message.chat.id);
+          return this.receiveEditedMessage(message, response);
         }
       })
     );
@@ -75,6 +79,17 @@ class TelegramBot {
   async receiveCallback(cal, res) {
     console.log("unhandled callback", cal, res);
   }
+
+
+  /**
+   * TGBot received edited message
+   * @param {Object} message
+   * @param {TelegramBotResponse} response
+   */
+  async receiveEditedMessage(msg, res) {
+    console.log("unhandled editing", msg, res);
+  }
+
 
   /**
    * Request Telegram API

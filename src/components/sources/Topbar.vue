@@ -26,12 +26,20 @@ export default {
   data() {
     return {
       state: TGBOT().controlBot.globalstate,
+      time: "00:00",
+      timeInterval: null,
     };
   },
-  computed: {
-    time() {
-      return timeFormat.hhmm(time());
-    },
+  mounted() {
+    let me = this;
+    this.timeInterval = setInterval(function () {
+      me.time = timeFormat.hhmm(time());
+    }, 1000);
+  },
+  beforeDestroy() {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+    }
   },
 };
 </script>

@@ -13,22 +13,35 @@ class IRCBot extends TelegramBot {
     this.ignoreConfirmed = false;
     this.lastTime = "";
   }
-  receiveMessage(message) {
-    if (message.chat.id !== config.bots.IRC.chat_id) return;
+  receiveMessage(msg) {
+    if (msg.chat.id !== config.bots.IRC.chat_id) return;
     this.ignoreConfirmed = true;
-    let t = time.hhmm(message.date * 1000);
+    let t = time.hhmm(msg.date * 1000);
     if (this.lastTime != t) {
-      message.t = t;
+      msg.t = t;
       this.lastTime = t;
     }
-    console.log(message);
+    console.log(msg);
 
-    this.globalstate.messages.push(message);
+    this.globalstate.messages.push(msg);
     if (this.globalstate.messages.length > this.maxMessages) {
       this.globalstate.messages = this.globalstate.messages.slice(
         this.globalstate.messages.length - this.maxMessages
       );
     }
+  }
+
+  receiveEditedMessage(msg) {
+    let editedMessage = this.globalstate.messages.find(
+      (x) => x.message_id == msg.message_id
+    );
+    if (editedMessage) {
+      editedMessage.text = msg.text;
+    }
+  }
+
+  clear() {
+    this.globalstate.messages = [];
   }
 }
 

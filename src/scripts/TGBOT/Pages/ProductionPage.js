@@ -3,7 +3,8 @@ import permissions from "../authenticate/permissions";
 import Page from "./Page";
 import Layouts from "../../Scene/Layouts";
 import Speakers from "../../Scene/Speakers";
-
+import Start from "./Start";
+import SessionPage from "./SessionPage"
 
 class ProductionPage extends Page {
   initialize() {
@@ -41,6 +42,9 @@ class ProductionPage extends Page {
         me.bot.setSpeaker(null);
       });
     }
+
+    this.addBtn("↓", this.permissions, () => Start);
+    this.addBtn("議程", [permissions.productionControl], () => SessionPage);
   }
 }
 

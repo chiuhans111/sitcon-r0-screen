@@ -4,6 +4,8 @@ import Page from "./Page";
 import Start from "./Start";
 import roles from "../authenticate/roles";
 
+import TGBOT from "../../TGBOT";
+
 class AdminPage extends Page {
   initialize() {
     // let me = this;
@@ -15,8 +17,7 @@ class AdminPage extends Page {
     this.addBtn("IRC管理", this.permissions, () => AdminIRCPage);
 
     this.res.addBtnRow();
-
-    this.addBtn("回首頁", this.permissions, () => Start);
+    this.addBtn("↓", this.permissions, () => Start);
   }
 }
 
@@ -34,7 +35,7 @@ class AdminPermissionPage extends Page {
       this.res.addBtnRow();
     }
 
-    this.addBtn("回首頁", this.permissions, () => Start);
+    this.addBtn("↓", this.permissions, () => Start);
   }
 }
 
@@ -68,7 +69,8 @@ function PermissionModify(user) {
           });
       }
       this.res.addInlineBtnRow();
-      this.addBtn("回首頁", this.permissions, () => Start);
+
+      this.addBtn("↓", this.permissions, () => Start);
     }
   };
 }
@@ -79,7 +81,10 @@ class AdminIRCPage extends Page {
     this.name = "ADMIN IRC管理";
     this.permissions = [permissions.admin];
 
-    this.addBtn("清空IRC", this.permissions, () => {});
+    this.addBtn("清空IRC", this.permissions, () => {
+      TGBOT().ircBot.clear()
+    });
+    this.addBtn("↓", this.permissions, () => Start);
 
     this.res.addBtnRow();
   }

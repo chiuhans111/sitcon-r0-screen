@@ -15,7 +15,7 @@ class SessionSelector extends Page {
 
     this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
     this.addBtn("回首頁", [permissions.productionControl], () => Start);
-    
+
     let me = this;
 
     let currentSession = SessionData.fromNow();
@@ -67,7 +67,7 @@ class SessionPage extends Page {
     this.res.addBtnRow();
 
     this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
-    this.addBtn("回首頁", [permissions.productionControl], () => Start);
+    this.addBtn("↓", this.permissions, () => Start);
   }
 }
 
