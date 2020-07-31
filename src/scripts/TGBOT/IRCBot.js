@@ -14,7 +14,8 @@ class IRCBot extends TelegramBot {
     this.lastTime = "";
   }
   receiveMessage(msg) {
-    if (msg.chat.id !== config.bots.IRC.chat_id) return;
+    if (config.bots.IRC.chat_id && msg.chat.id !== config.bots.IRC.chat_id)
+      return;
     this.ignoreConfirmed = true;
     let t = time.hhmm(msg.date * 1000);
     if (this.lastTime != t) {
