@@ -33,12 +33,21 @@ let data = {
   fromNow() {
     return this.fromTime(time());
   },
+  byId: {},
 };
 
 function loadSession(session) {
   // console.log(session);
   // data.session = session;
   data.rooms = utils.process(session);
+
+  data.byId = {};
+  for (var i in data.rooms) {
+    let room = data.rooms[i];
+    room.map((x) => {
+      data.byId[x.id] = x;
+    });
+  }
 }
 
 loadSession(session);

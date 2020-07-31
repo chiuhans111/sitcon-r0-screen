@@ -1,21 +1,26 @@
 const Layouts = {
   STBY: {
+    id: "STBY",
     title: "StandBy",
     modes: ["STBY"],
   },
   Session: {
+    id: "Session",
     title: "Session",
     modes: ["PPT+IRC", "SLIDO+IRC", "PPT+SLIDO"],
   },
   Event: {
+    id: "Event",
     title: "Session",
     modes: ["PPT+IRC"],
   },
   Forum: {
+    id: "Forum",
     title: "Forum",
     modes: ["PPT", "SLIDO"],
   },
   LightningTalk: {
+    id: "LightningTalk",
     title: "LightingTalk",
     modes: ["STBY", "PPT", "TIMEUP"],
   },

@@ -9,9 +9,16 @@ class IRCBot extends TelegramBot {
       messages: [],
     };
 
+    if (localStorage.IRCBot_globalstate) {
+      this.globalstate = JSON.parse(localStorage.IRCBot_globalstate);
+    }
+
     this.maxMessages = 25;
     this.ignoreConfirmed = false;
     this.lastTime = "";
+  }
+  saveState() {
+    localStorage.IRCBot_globalstate = JSON.stringify(this.globalstate);
   }
   receiveMessage(msg) {
     if (config.bots.IRC.chat_id && msg.chat.id !== config.bots.IRC.chat_id)
@@ -30,6 +37,8 @@ class IRCBot extends TelegramBot {
         this.globalstate.messages.length - this.maxMessages
       );
     }
+
+    this.saveState();
   }
 
   receiveEditedMessage(msg) {
@@ -39,10 +48,12 @@ class IRCBot extends TelegramBot {
     if (editedMessage) {
       editedMessage.text = msg.text;
     }
+
+    this.saveState();
   }
 
   clear() {
-    this.globalstate.messages = [];
+    this.saveState();
   }
 }
 

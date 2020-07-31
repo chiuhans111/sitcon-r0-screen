@@ -8,6 +8,7 @@ function process(data) {
     let qa = session.qa;
     let type = session.type;
     let room = session.room;
+    let id = session.id
 
     let speakers = session.speakers.map((speakerId) => {
       let speaker = data.speakers.find((x) => x.id == speakerId);
@@ -26,6 +27,7 @@ function process(data) {
       type,
       room,
       speakers,
+      id
     };
 
     // slido code

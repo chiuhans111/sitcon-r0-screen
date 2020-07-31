@@ -15,6 +15,7 @@ class AdminPage extends Page {
     this.addBtn("權限管理", this.permissions, () => AdminPermissionPage);
 
     this.addBtn("IRC管理", this.permissions, () => AdminIRCPage);
+    this.addBtn("暫存管理", this.permissions, () => AdminLocalStoragePage);
 
     this.res.addBtnRow();
     this.addBtn("↓", this.permissions, () => Start);
@@ -82,12 +83,28 @@ class AdminIRCPage extends Page {
     this.permissions = [permissions.admin];
 
     this.addBtn("清空IRC", this.permissions, () => {
-      TGBOT().ircBot.clear()
+      TGBOT().ircBot.clear();
     });
+    this.res.addBtnRow();
     this.addBtn("↓", this.permissions, () => Start);
 
     this.res.addBtnRow();
   }
 }
 
+class AdminLocalStoragePage extends Page {
+  initialize() {
+    // let me = this;
+    this.name = "ADMIN  暫存管理";
+    this.permissions = [permissions.admin];
+
+    this.addBtn("清空暫存", this.permissions, () => {
+      localStorage.clear();
+    });
+    this.res.addBtnRow();
+    this.addBtn("↓", this.permissions, () => Start);
+
+    this.res.addBtnRow();
+  }
+}
 export default AdminPage;

@@ -7,12 +7,14 @@ import SessionData from "../Session";
 
 import guardian from "./authenticate/guardian";
 import permissions from "./authenticate/permissions";
+import Speakers from "../Scene/Speakers";
 
 class ControlBot extends TelegramBot {
   constructor(token) {
     super(token);
 
     this.userstates = {};
+
     this.globalstate = {
       layout: Layouts.STBY,
       mode: Layouts.STBY.modes[0],
@@ -21,8 +23,29 @@ class ControlBot extends TelegramBot {
       speaker: null,
     };
 
+    if (localStorage.ControlBot_globalstate) {
+      this.globalstate = JSON.parse(localStorage.ControlBot_globalstate);
+      if (this.globalstate.session)
+        this.globalstate.session = SessionData.byId[this.globalstate.session];
+      if (this.globalstate.speaker)
+        this.globalstate.speaker = Speakers[this.globalstate.speaker];
+      if (this.globalstate.layout)
+        this.globalstate.layout = Layouts[this.globalstate.layout];
+    }
+
     this.defaultPage = Start;
     this.defaultVisotorPage = VisotorPage;
+  }
+
+  saveState() {
+    let savedState = {};
+    Object.assign(savedState, this.globalstate);
+    if (this.globalstate.session)
+      savedState.session = this.globalstate.session.id;
+    if (this.globalstate.speaker)
+      savedState.speaker = this.globalstate.speaker.id;
+    if (this.globalstate.layout) savedState.layout = this.globalstate.layout.id;
+    localStorage.ControlBot_globalstate = JSON.stringify(savedState);
   }
 
   broadcastUpdate(msg, permissions) {
@@ -31,6 +54,7 @@ class ControlBot extends TelegramBot {
         this.userstates[i].reload(msg);
       }
     }
+    this.saveState();
   }
 
   setLayout(layout) {
@@ -42,6 +66,7 @@ class ControlBot extends TelegramBot {
     this.broadcastUpdate("更新版面為：" + layout.title, [
       permissions.participate,
     ]);
+    this.saveState();
   }
 
   setMode(mode) {
@@ -51,6 +76,7 @@ class ControlBot extends TelegramBot {
 
       this.broadcastUpdate("更新模式為：" + mode, [permissions.participate]);
     }
+    this.saveState();
   }
 
   setAuto(auto) {
@@ -60,6 +86,7 @@ class ControlBot extends TelegramBot {
     this.broadcastUpdate("更新議程自動規則：" + auto, [
       permissions.participate,
     ]);
+    this.saveState();
   }
 
   setSession(session) {
@@ -71,6 +98,7 @@ class ControlBot extends TelegramBot {
     this.broadcastUpdate("更新議程為：" + session.title, [
       permissions.participate,
     ]);
+    this.saveState();
   }
 
   setSpeaker(speaker) {
@@ -79,6 +107,7 @@ class ControlBot extends TelegramBot {
     if (speaker) name = speaker.name;
     this.globalstate.speaker = speaker;
     this.broadcastUpdate("更新講者為：" + name, [permissions.participate]);
+    this.saveState();
   }
 
   update() {
