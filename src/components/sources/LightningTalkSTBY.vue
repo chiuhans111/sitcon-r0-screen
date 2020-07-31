@@ -86,7 +86,7 @@
       />
     </svg>
 
-    <img src="/img/lightningtalk.png" class="lightningtalk-stby_img" alt />
+    <img src="../../assets/img/lightningtalk.png" class="lightningtalk-stby_img" alt />
   </div>
 </template>
 

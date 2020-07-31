@@ -1,15 +1,19 @@
+import CARD_HOST from "../../assets/img/CARD_HOST.png";
+import CARD_JAN from "../../assets/img/CARD_JAN.png";
+import CARD_HOU from "../../assets/img/CARD_HOU.png";
+
 const Speakers = {
   HOST: {
     name: "子魚",
-    img: "/img/CARD_HOST.png",
+    img: CARD_HOST,
   },
   SP1: {
     name: "詹婷怡",
-    img: "/img/CARD_JAN.png",
+    img: CARD_JAN,
   },
   SP2: {
     name: "何明諠",
-    img: "/img/CARD_HOU.png",
+    img: CARD_HOU,
   },
 };
 

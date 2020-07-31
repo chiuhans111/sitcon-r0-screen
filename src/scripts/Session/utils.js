@@ -18,7 +18,7 @@ function process(data) {
 
     if (rooms[room] == null) rooms[room] = [];
 
-    session.parsed = {
+    let parsed = {
       title,
       start,
       end,
@@ -28,7 +28,24 @@ function process(data) {
       speakers,
     };
 
-    rooms[room].push(session.parsed);
+    // slido code
+    let me = parsed;
+    let you = session;
+    me.hash = "";
+    me.code = session.code || "";
+
+    if (qa) {
+      let hash = qa.split("/").pop();
+      me.hash = hash;
+      let xhr = new XMLHttpRequest();
+      xhr.open("get", "https://wall.sli.do/api/v0.5/events?hash=" + hash);
+      xhr.onload = function() {
+        you.code = me.code = JSON.parse(xhr.response)[0].code;
+      };
+      xhr.send();
+    }
+
+    rooms[room].push(parsed);
   });
 
   for (let i in rooms) {
@@ -64,25 +81,10 @@ function process(data) {
     room.map((session, i, arr) => {
       if (i > 0) session.prev = arr[i - 1];
       if (i + 1 < arr.length) session.next = arr[i + 1];
-
-      // slido code
-      let me = session;
-      let qa = session.qa;
-      session.hash = "";
-      session.code = "";
-
-      if (qa) {
-        let hash = qa.split("/").pop();
-        me.hash = hash;
-        let xhr = new XMLHttpRequest();
-        xhr.open("get", "https://cors-anywhere.herokuapp.com/https://wall.sli.do/api/v0.5/events?hash=" + hash);
-        xhr.onload = function() {
-          me.code = JSON.parse(xhr.response)[0].code;
-        };
-        xhr.send();
-      }
     });
   }
+
+  console.log(data);
 
   return rooms;
 }

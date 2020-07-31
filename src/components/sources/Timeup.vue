@@ -10,7 +10,7 @@
       <div class="loop-content">{{ text }}</div>
       <div class="loop-content">{{ text }}</div>
     </div>
-    <img src="/img/timeup.png" class="lightningtalk-timeup_img" alt />
+    <img src="../../assets/img/timeup.png" class="lightningtalk-timeup_img" alt />
   </div>
 </template>
 

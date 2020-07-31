@@ -16,14 +16,14 @@
     &_top {
       position: relative;
       height: 450px;
-      background-image: url("/img/cam2.png");
+      background-image: url("../img/cam2.png");
       background-size: 100% 100%;
     }
 
     &_bottom {
       flex-grow: 1;
       position: relative;
-      background-image: url("/img/CARD_EMPTY.png");
+      background-image: url("../img/CARD_EMPTY.png");
       background-size: 100% 100%;
     }
   }
