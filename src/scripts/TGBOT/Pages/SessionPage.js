@@ -55,14 +55,22 @@ class SessionPage extends Page {
     this.name = "議程管理";
     this.permissions = [permissions.sessionControl];
 
-    this.addBtn("手動議程", this.permissions, function() {
-      me.bot.setAuto(false);
-      return SessionSelector;
-    });
+    this.addBtn(
+      this.bot.globalstate.auto ? "手動議程" : "[手動議程]",
+      this.permissions,
+      function() {
+        me.bot.setAuto(false);
+        return SessionSelector;
+      }
+    );
 
-    this.addBtn("自動議程", this.permissions, function() {
-      me.bot.setAuto(true);
-    });
+    this.addBtn(
+      this.bot.globalstate.auto ? "[自動議程]" : "自動議程",
+      this.permissions,
+      function() {
+        me.bot.setAuto(true);
+      }
+    );
 
     this.res.addBtnRow();
 
