@@ -8,20 +8,19 @@
       }"
       ref="content"
     >
-      <template v-for="(msg, i) in state.messages">
-        <div class="irc_message-time" v-if="msg.t" :key="'msg-time' + i">
-          {{ msg.t }}
-        </div>
+      <template v-for="(msg, i) in messages">
+        <div class="irc_message-time" v-if="msg.t" :key="'msg-time' + i">{{ msg.t }}</div>
 
         <div class="irc_message" :key="'msg-' + i" v-if="msg.text">
-          <div class="irc_message-username ">
-            {{ msg.from.first_name }}
-            {{ msg.from.last_name }}
+          <div class="irc_message-username">
+            <template v-if="msg.from.username">{{msg.from.username}}</template>
+            <template v-else>
+              {{ msg.from.first_name }}
+              {{ msg.from.last_name }}
+            </template>
             :
           </div>
-          <div class="irc_message-text">
-            {{ msg.text }}
-          </div>
+          <div class="irc_message-text">{{ msg.text }}</div>
 
           <!-- <div
             v-if="msg.sticker"
@@ -29,7 +28,7 @@
             :style="{
               backgroundImage: `url(${getFileUrl(msg.sticker.thumb.file_id)})`,
             }"
-          ></div> -->
+          ></div>-->
 
           <!-- <div
             v-if="msg.photo"
@@ -37,7 +36,7 @@
             :style="{
               backgroundImage: `url(${getFileUrl(msg.photo[0].file_id)})`,
             }"
-          ></div> -->
+          ></div>-->
 
           <!-- {{ msg }} -->
         </div>
@@ -77,6 +76,12 @@ export default {
       }
 
       return this.file_paths[file_id];
+    },
+  },
+  computed: {
+    messages() {
+      let messages = this.state.messages;
+      return messages.filter((msg) => msg.text !== undefined);
     },
   },
   updated() {

@@ -1,5 +1,8 @@
+import slidoCode from "./slidoCode.json";
+
 function process(data) {
   let rooms = {};
+  window.slidoCode = {};
 
   data.sessions.map((session) => {
     let title = session.zh.title;
@@ -40,11 +43,18 @@ function process(data) {
       let hash = qa.split("/").pop();
       me.hash = hash;
       let xhr = new XMLHttpRequest();
-      xhr.open("get", "https://wall.sli.do/api/v0.5/events?hash=" + hash);
-      xhr.onload = function() {
-        you.code = me.code = JSON.parse(xhr.response)[0].code;
-      };
-      xhr.send();
+
+      if (slidoCode[hash]) {
+        window.slidoCode[hash] = you.code = me.code = slidoCode[hash];
+      } else {
+        xhr.open("get", "https://wall.sli.do/api/v0.5/events?hash=" + hash);
+        xhr.onload = function() {
+          window.slidoCode[hash] = you.code = me.code = JSON.parse(
+            xhr.response
+          )[0].code;
+        };
+        xhr.send();
+      }
     }
 
     rooms[room].push(parsed);

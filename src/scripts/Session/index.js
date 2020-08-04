@@ -52,11 +52,11 @@ function loadSession(session) {
 
 loadSession(session);
 
-// let xhr = new XMLHttpRequest();
-// xhr.open("get", "https://sitcon.org/2020/json/session.json");
-// xhr.onload = function() {
-//   loadSession(JSON.parse(xhr.response));
-// };
-// xhr.send();
+let xhr = new XMLHttpRequest();
+xhr.open("get", "https://sitcon.org/2020/json/session.json");
+xhr.onload = function() {
+  loadSession(JSON.parse(xhr.response));
+};
+xhr.send();
 
 export default data;

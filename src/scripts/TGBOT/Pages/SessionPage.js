@@ -13,8 +13,8 @@ class SessionSelector extends Page {
     this.name = "議程選擇";
     this.permissions = [permissions.sessionControl];
 
-    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
-    this.addBtn("回首頁", [permissions.productionControl], () => Start);
+    this.addBtn("版型", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("↓", [permissions.productionControl], () => Start);
 
     let me = this;
 
@@ -74,7 +74,7 @@ class SessionPage extends Page {
 
     this.res.addBtnRow();
 
-    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("版型", [permissions.productionControl], () => ProductionPage);
     this.addBtn("↓", this.permissions, () => Start);
   }
 }

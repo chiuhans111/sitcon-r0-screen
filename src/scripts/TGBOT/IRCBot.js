@@ -21,8 +21,10 @@ class IRCBot extends TelegramBot {
     localStorage.IRCBot_globalstate = JSON.stringify(this.globalstate);
   }
   receiveMessage(msg) {
-    if (config.bots.IRC.chat_id && msg.chat.id !== config.bots.IRC.chat_id)
+
+    if (config.bots.IRC.username && msg.chat.username !== config.bots.IRC.username)
       return;
+
     this.ignoreConfirmed = true;
     let t = time.hhmm(msg.date * 1000);
     if (this.lastTime != t) {
@@ -30,12 +32,13 @@ class IRCBot extends TelegramBot {
       this.lastTime = t;
     }
     console.log(msg);
-
-    this.globalstate.messages.push(msg);
-    if (this.globalstate.messages.length > this.maxMessages) {
-      this.globalstate.messages = this.globalstate.messages.slice(
-        this.globalstate.messages.length - this.maxMessages
-      );
+    if (msg.text) {
+      this.globalstate.messages.push(msg);
+      if (this.globalstate.messages.length > this.maxMessages) {
+        this.globalstate.messages = this.globalstate.messages.slice(
+          this.globalstate.messages.length - this.maxMessages
+        );
+      }
     }
 
     this.saveState();
@@ -53,6 +56,7 @@ class IRCBot extends TelegramBot {
   }
 
   clear() {
+    this.globalstate.messages = [];
     this.saveState();
   }
 }

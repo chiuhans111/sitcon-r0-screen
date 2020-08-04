@@ -1,10 +1,12 @@
 <template>
   <div class="camholder">
-    <div :class="{
-        show:state.mode == 'PPT+IRC' || state.mode == 'SLIDO+IRC'
-    }">
+    <div
+      :class="{
+        show:state.mode == 'PPT+IRC' || state.mode == 'SLIDO+IRC'|| state.mode == 'STBY'|| state.mode == 'PPT'
+    }"
+    >
       <p class="camholder-text">Join TG chat</p>
-      <p class="camholder-text">@SITCON2020-R0</p>
+      <p class="camholder-text">@SITCONgeneral</p>
     </div>
 
     <div :class="{

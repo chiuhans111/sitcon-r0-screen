@@ -11,7 +11,9 @@
         <LightningTalkSTBY :show="state.mode == 'STBY'"></LightningTalkSTBY>
       </div>
       <div class="session-right">
-        <div class="session-right_top"></div>
+        <div class="session-right_top">
+          <Camholder></Camholder>
+        </div>
         <div class="session-right_bottom">
           <IRC :show="state.mode == 'PPT' || state.mode == 'STBY'"></IRC>
         </div>
@@ -32,6 +34,7 @@ import Topbar from "../sources/Topbar";
 import IRC from "../sources/IRC";
 import LightningTalkSTBY from "../sources/LightningTalkSTBY";
 import Timeup from "../sources/Timeup";
+import Camholder from "../sources/Camholder";
 // import Slido from "../sources/Slido";
 
 export default {
@@ -43,6 +46,7 @@ export default {
     Timeup,
     // Slido,
     LightningTalkSTBY,
+    Camholder,
   },
   data() {
     return {

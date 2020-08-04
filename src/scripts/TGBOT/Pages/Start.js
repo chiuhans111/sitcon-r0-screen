@@ -26,7 +26,7 @@ class Start extends Page {
     );
 
     
-    this.addBtn("導播", [permissions.productionControl], () => ProductionPage);
+    this.addBtn("版型", [permissions.productionControl], () => ProductionPage);
     this.addBtn("議程", [permissions.sessionControl], () => SessionPage);
     this.addBtn("管理", [permissions.admin], () => AdminPage);
   }

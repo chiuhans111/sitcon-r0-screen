@@ -52,10 +52,10 @@ export default {
       }
 
       let otherLines = [
-        "The speaker didn't complete the talk in time",
-        "連接超時，請檢查網路連線。連接超時，請檢查網路連線。。",
-        "The connection has timed out.",
-        "ERROR ERROR ERROR ERROR ERROR",
+        "The speaker didn't complete the talk in time. ",
+        "連接超時，請檢查網路連線。連接超時，請檢查網路連線。",
+        "The connection has timed out. ",
+        "ERROR ERROR ERROR ERROR ERROR ",
         "時間到了！408 Request Timeout！",
       ];
 

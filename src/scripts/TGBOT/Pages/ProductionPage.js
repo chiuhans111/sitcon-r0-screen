@@ -8,7 +8,7 @@ import SessionPage from "./SessionPage";
 
 class ProductionPage extends Page {
   initialize() {
-    this.name = "導播";
+    this.name = "版型控制";
     this.permissions = [permissions.productionControl];
     let me = this;
 
