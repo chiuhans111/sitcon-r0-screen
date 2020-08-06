@@ -3,10 +3,7 @@
     <div class="topbar-title">
       <div class="topbar-title_time">{{time}}</div>
       <template v-if="state.session">
-        <div class="topbar-title_title">
-          {{state.session.title}}
-          <span v-if="!bot.online">.</span>
-        </div>
+        <div class="topbar-title_title">{{state.session.title}}</div>
         <div class="topbar-title_speakers">
           <span
             class="topbar-title_speakers-speaker"
@@ -14,6 +11,7 @@
             :key="'speaker'+i"
           >{{speaker.name}}</span>
         </div>
+        <span v-if="!bot.online">.</span>
       </template>
     </div>
   </div>
