@@ -6,6 +6,7 @@ class TelegramBot {
     this.ignoreConfirmed = true;
     this.lastUpdateId = -1;
     this.alive = true;
+    this.online = false;
     this.ready = function() {};
 
     this.setup();
@@ -28,7 +29,6 @@ class TelegramBot {
 
     // console.log(this.lastUpdateId);
     let updates = await this.request("getUpdates", payload);
-
 
     if (!updates.ok) {
       console.error("getUpdate failed");
@@ -53,7 +53,7 @@ class TelegramBot {
           );
           response.answer_callback_id = callback_query.id;
           return this.receiveCallback(update.callback_query, response);
-        } else if(update.edited_message){
+        } else if (update.edited_message) {
           let message = update.edited_message;
           let response = new TelegramBotResponse(this, message.chat.id);
           return this.receiveEditedMessage(message, response);
@@ -80,7 +80,6 @@ class TelegramBot {
     console.log("unhandled callback", cal, res);
   }
 
-
   /**
    * TGBot received edited message
    * @param {Object} message
@@ -90,7 +89,6 @@ class TelegramBot {
     console.log("unhandled editing", msg, res);
   }
 
-
   /**
    * Request Telegram API
    * @param {string} api
@@ -99,16 +97,19 @@ class TelegramBot {
     let xhr = new XMLHttpRequest();
     let me = this;
     // console.log(payload);
-    return new Promise((done) => {
+    return new Promise((done, error) => {
       if (!me.alive) return done();
 
       xhr.open("post", `https://api.telegram.org/bot${this.token}/${api}`);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onload = function() {
         done(JSON.parse(xhr.response));
+        me.online = true;
       };
-      xhr.onerror = function() {
+      xhr.onerror = function(err) {
         console.error("request", api, "failed");
+        error(err);
+        me.online = false;
       };
       xhr.send(JSON.stringify(payload));
     });

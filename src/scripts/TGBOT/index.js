@@ -9,9 +9,15 @@ function updateBot(bot, interval) {
     // console.log(ircBot.messages);
     if (bot.alive) {
       bot.update();
-      bot.getUpdate(interval).then(function() {
-        setTimeout(update, 0);
-      });
+      bot.getUpdate(interval).then(
+        function() {
+          setTimeout(update, 500);
+        },
+        function(err) {
+          console.log("got error,", err);
+          setTimeout(update, 500);
+        }
+      );
     }
   };
 
