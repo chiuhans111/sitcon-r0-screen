@@ -11,6 +11,7 @@
             :key="'speaker'+i"
           >{{speaker.name}}</span>
         </div>
+        <span v-if="!bot.online">.</span>
       </template>
     </div>
   </div>
@@ -28,6 +29,7 @@ export default {
       state: TGBOT().controlBot.globalstate,
       time: "00:00",
       timeInterval: null,
+      bot: TGBOT().controlBot,
     };
   },
   mounted() {
