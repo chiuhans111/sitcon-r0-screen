@@ -42,6 +42,10 @@
       height: 240px;
       background-image: url("../img/cam1.png");
       background-size: 100% 100%;
+
+      &-transparent{
+        opacity: 0;
+      }
     }
 
     &_bottom {
